@@ -124,6 +124,8 @@
     .qr-sec-title { font-size:12px; font-weight:700; color:#374151; margin-bottom:10px; }
     .qr-box { display:inline-block; padding:10px; background:white; border:1.5px solid var(--border); border-radius:12px; }
     .qr-hint { font-size:11px; color:var(--gray); margin-top:8px; }
+    .qr-dl-btn { margin-top:10px; padding:8px 20px; background:var(--blue2); color:white; border:none; border-radius:9px; font-size:12px; font-weight:700; cursor:pointer; transition:all .14s; }
+    .qr-dl-btn:hover { background:var(--blue); }
 
     .hidden { display:none !important; }
     @media(max-width:480px){ .lang-grid{grid-template-columns:repeat(2,1fr);} }
@@ -204,6 +206,7 @@
         <div class="qr-sec-title" id="qr-title-lbl">📱 이 서식 바로가기 QR</div>
         <div class="qr-box"><div id="qr-canvas"></div></div>
         <div class="qr-hint" id="qr-hint-lbl">QR을 스캔하면 이 서식으로 바로 이동합니다</div>
+        <button class="qr-dl-btn" onclick="downloadQR()" id="qr-dl-btn">⬇ QR 이미지 저장</button>
       </div>
     </div>
   </div>
@@ -239,11 +242,11 @@
 <script>
 /* ── UI Strings ── */
 const UI = {
-  ko:  { hTitle:'구스링', hSub:'Guro Smart Ring · 구로구 다국어 민원서식 가이드', s1:'언어 선택', s2:'서식 선택', s3:'서식 안내', langPrompt:'언어를 선택하세요', formPrompt:'서식을 선택하세요', tts:'설명 듣기', back1:'언어 다시 선택', back2:'서식 목록으로', catAll:'전체', catR:'주민등록', catF:'가족관계', catP:'여권', catE:'기타', guideTitle:'항목별 안내', imgCap:'이미지를 탭하면 크게 볼 수 있어요', fab:'피드백', modalTitle:'불편한 점이 있으신가요?', modalSub:'서식 오류, 번역 이상, 개선 의견 모두 환영해요', modalCancel:'취소', modalSend:'보내기', statV:'방문', statF:'서식 조회', qrTitle:'📱 이 서식 바로가기 QR', qrHint:'QR을 스캔하면 이 서식으로 바로 이동합니다' },
-  zh:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多语言民愿表格指南', s1:'选择语言', s2:'选择表格', s3:'表格说明', langPrompt:'请选择语言', formPrompt:'请选择表格', tts:'收听说明', back1:'重新选择语言', back2:'返回列表', catAll:'全部', catR:'居民登录', catF:'家庭关系', catP:'护照', catE:'其他', guideTitle:'各项目说明', imgCap:'点击图片可放大查看', fab:'反馈', modalTitle:'有什么不便之处吗？', modalSub:'表格错误、翻译问题、改进意见均欢迎', modalCancel:'取消', modalSend:'发送', statV:'访问', statF:'表格查看', qrTitle:'📱 扫描直达此表格', qrHint:'扫描二维码可直接跳转到此表格' },
-  vi:  { hTitle:'구스링', hSub:'Guro Smart Ring · Hướng dẫn mẫu đơn đa ngôn ngữ Guro-gu', s1:'Chọn ngôn ngữ', s2:'Chọn mẫu đơn', s3:'Hướng dẫn', langPrompt:'Vui lòng chọn ngôn ngữ', formPrompt:'Vui lòng chọn mẫu đơn', tts:'Nghe hướng dẫn', back1:'Chọn lại ngôn ngữ', back2:'Trở về danh sách', catAll:'Tất cả', catR:'Đăng ký cư trú', catF:'Quan hệ gia đình', catP:'Hộ chiếu', catE:'Khác', guideTitle:'Hướng dẫn từng mục', imgCap:'Nhấn vào ảnh để phóng to', fab:'Phản hồi', modalTitle:'Bạn có gặp khó khăn gì không?', modalSub:'Lỗi mẫu đơn, dịch sai, ý kiến cải thiện đều được chào đón', modalCancel:'Hủy', modalSend:'Gửi', statV:'lượt truy cập', statF:'lượt xem', qrTitle:'📱 QR truy cập nhanh', qrHint:'Quét mã QR để truy cập trực tiếp vào mẫu đơn này' },
-  ja:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多言語民願書式案内', s1:'言語選択', s2:'書式選択', s3:'書式案内', langPrompt:'言語を選択してください', formPrompt:'書式を選択してください', tts:'説明を聞く', back1:'言語を再選択', back2:'書式一覧へ', catAll:'全て', catR:'住民登録', catF:'家族関係', catP:'パスポート', catE:'その他', guideTitle:'各項目の案内', imgCap:'画像をタップすると拡大できます', fab:'フィードバック', modalTitle:'不便な点はありますか？', modalSub:'書式エラー、翻訳の誤り、改善意見を歓迎します', modalCancel:'キャンセル', modalSend:'送信', statV:'訪問', statF:'書式閲覧', qrTitle:'📱 この書式へのQRコード', qrHint:'QRコードをスキャンするとこの書式に直接アクセスできます' },
-  fil: { hTitle:'구스링', hSub:'Guro Smart Ring · Gabay sa Multilingual na Form ng Guro-gu', s1:'Pumili ng Wika', s2:'Pumili ng Form', s3:'Gabay', langPrompt:'Pumili ng wika', formPrompt:'Pumili ng form', tts:'Pakinggan', back1:'Pumili Muli ng Wika', back2:'Bumalik sa Listahan', catAll:'Lahat', catR:'Pagpaparehistro', catF:'Relasyong Pampamilya', catP:'Pasaporte', catE:'Iba pa', guideTitle:'Gabay sa Bawat Aytem', imgCap:'I-tap ang larawan para palakihin', fab:'Feedback', modalTitle:'May hirap ka ba?', modalSub:'Mga error sa form, maling salin, o mungkahi — lahat ay tinatanggap', modalCancel:'Kanselahin', modalSend:'Ipadala', statV:'bisita', statF:'form na tiningnan', qrTitle:'📱 QR para sa Form na Ito', qrHint:'I-scan ang QR para direktang mapunta sa form na ito' },
+  ko:  { hTitle:'구스링', hSub:'Guro Smart Ring · 구로구 다국어 민원서식 가이드', s1:'언어 선택', s2:'서식 선택', s3:'서식 안내', langPrompt:'언어를 선택하세요', formPrompt:'서식을 선택하세요', tts:'설명 듣기', back1:'언어 다시 선택', back2:'서식 목록으로', catAll:'전체', catR:'주민등록', catF:'가족관계', catP:'여권', catE:'기타', guideTitle:'항목별 안내', imgCap:'이미지를 탭하면 크게 볼 수 있어요', fab:'피드백', modalTitle:'불편한 점이 있으신가요?', modalSub:'서식 오류, 번역 이상, 개선 의견 모두 환영해요', modalCancel:'취소', modalSend:'보내기', statV:'방문', statF:'서식 조회', qrTitle:'📱 이 서식 바로가기 QR', qrHint:'QR을 스캔하면 이 서식으로 바로 이동합니다', qrDl:'⬇ QR 이미지 저장' },
+  zh:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多语言民愿表格指南', s1:'选择语言', s2:'选择表格', s3:'表格说明', langPrompt:'请选择语言', formPrompt:'请选择表格', tts:'收听说明', back1:'重新选择语言', back2:'返回列表', catAll:'全部', catR:'居民登录', catF:'家庭关系', catP:'护照', catE:'其他', guideTitle:'各项目说明', imgCap:'点击图片可放大查看', fab:'反馈', modalTitle:'有什么不便之处吗？', modalSub:'表格错误、翻译问题、改进意见均欢迎', modalCancel:'取消', modalSend:'发送', statV:'访问', statF:'表格查看', qrTitle:'📱 扫描直达此表格', qrHint:'扫描二维码可直接跳转到此表格', qrDl:'⬇ 保存QR图片' },
+  vi:  { hTitle:'구스링', hSub:'Guro Smart Ring · Hướng dẫn mẫu đơn đa ngôn ngữ Guro-gu', s1:'Chọn ngôn ngữ', s2:'Chọn mẫu đơn', s3:'Hướng dẫn', langPrompt:'Vui lòng chọn ngôn ngữ', formPrompt:'Vui lòng chọn mẫu đơn', tts:'Nghe hướng dẫn', back1:'Chọn lại ngôn ngữ', back2:'Trở về danh sách', catAll:'Tất cả', catR:'Đăng ký cư trú', catF:'Quan hệ gia đình', catP:'Hộ chiếu', catE:'Khác', guideTitle:'Hướng dẫn từng mục', imgCap:'Nhấn vào ảnh để phóng to', fab:'Phản hồi', modalTitle:'Bạn có gặp khó khăn gì không?', modalSub:'Lỗi mẫu đơn, dịch sai, ý kiến cải thiện đều được chào đón', modalCancel:'Hủy', modalSend:'Gửi', statV:'lượt truy cập', statF:'lượt xem', qrTitle:'📱 QR truy cập nhanh', qrHint:'Quét mã QR để truy cập trực tiếp vào mẫu đơn này', qrDl:'⬇ Lưu ảnh QR' },
+  ja:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多言語民願書式案内', s1:'言語選択', s2:'書式選択', s3:'書式案内', langPrompt:'言語を選択してください', formPrompt:'書式を選択してください', tts:'説明を聞く', back1:'言語を再選択', back2:'書式一覧へ', catAll:'全て', catR:'住民登録', catF:'家族関係', catP:'パスポート', catE:'その他', guideTitle:'各項目の案内', imgCap:'画像をタップすると拡大できます', fab:'フィードバック', modalTitle:'不便な点はありますか？', modalSub:'書式エラー、翻訳の誤り、改善意見を歓迎します', modalCancel:'キャンセル', modalSend:'送信', statV:'訪問', statF:'書式閲覧', qrTitle:'📱 この書式へのQRコード', qrHint:'QRコードをスキャンするとこの書式に直接アクセスできます', qrDl:'⬇ QR画像を保存' },
+  fil: { hTitle:'구스링', hSub:'Guro Smart Ring · Gabay sa Multilingual na Form ng Guro-gu', s1:'Pumili ng Wika', s2:'Pumili ng Form', s3:'Gabay', langPrompt:'Pumili ng wika', formPrompt:'Pumili ng form', tts:'Pakinggan', back1:'Pumili Muli ng Wika', back2:'Bumalik sa Listahan', catAll:'Lahat', catR:'Pagpaparehistro', catF:'Relasyong Pampamilya', catP:'Pasaporte', catE:'Iba pa', guideTitle:'Gabay sa Bawat Aytem', imgCap:'I-tap ang larawan para palakihin', fab:'Feedback', modalTitle:'May hirap ka ba?', modalSub:'Mga error sa form, maling salin, o mungkahi — lahat ay tinatanggap', modalCancel:'Kanselahin', modalSend:'Ipadala', statV:'bisita', statF:'form na tiningnan', qrTitle:'📱 QR para sa Form na Ito', qrHint:'I-scan ang QR para direktang mapunta sa form na ito', qrDl:'⬇ I-save ang QR' },
 };
 
 /* ── Form Data ── */
@@ -539,6 +542,7 @@ function applyUI(l) {
   $('stat-f-lbl').textContent   = u.statF;
   $('qr-title-lbl').textContent = u.qrTitle;
   $('qr-hint-lbl').textContent  = u.qrHint;
+  $('qr-dl-btn').textContent    = u.qrDl;
 }
 
 /* ── Step 1 ── */
@@ -633,6 +637,16 @@ function speak() {
   const u = new SpeechSynthesisUtterance(curForm.desc[lang]);
   u.lang = map[lang] || 'ko-KR'; u.rate = 0.88;
   speechSynthesis.speak(u);
+}
+
+/* ── QR Download ── */
+function downloadQR() {
+  const canvas = $('qr-canvas').querySelector('canvas');
+  if (!canvas) return;
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL('image/png');
+  a.download = `구스링_${curForm ? curForm.id : 'qr'}_${lang}.png`;
+  a.click();
 }
 
 /* ── Lightbox ── */
