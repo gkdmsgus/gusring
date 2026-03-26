@@ -1,0 +1,739 @@
+{
+  "languages": {
+    "ko": "한국어",
+    "zh": "中文 (简体)",
+    "vi": "Tiếng Việt",
+    "ja": "日本語",
+    "fil": "Filipino"
+  },
+  "forms": [
+    {
+      "id": "move_in",
+      "category": "주민등록",
+      "titles": {
+        "ko": "전입신고서 (세대 모두 이동)",
+        "zh": "迁入申报书（全体成员迁移）",
+        "vi": "Đơn đăng ký chuyển đến (Toàn bộ hộ gia đình di chuyển)",
+        "ja": "転入届（世帯全員が移動する場合）",
+        "fil": "Abiso ng Paglipat (Buong Sambahayan)"
+      },
+      "descriptions": {
+        "ko": "세대 전원이 함께 이사하는 경우, 이사한 날로부터 14일 이내에 신청해야 합니다.",
+        "zh": "全体家庭成员一同搬迁时，必须在搬迁之日起14天内申请。",
+        "vi": "Khi toàn bộ thành viên hộ gia đình cùng chuyển đi, phải đăng ký trong vòng 14 ngày kể từ ngày chuyển đến.",
+        "ja": "世帯全員が一緒に引越しする場合、引越しの日から14日以内に申請する必要があります。",
+        "fil": "Kapag lumipat ang buong sambahayan, kailangang mag-apply sa loob ng 14 na araw mula sa araw ng paglipat."
+      },
+      "where": {
+        "ko": "주민센터(읍·면·동 주민자치센터)",
+        "zh": "居民服务中心（邑·面·洞 居民自治中心）",
+        "vi": "Trung tâm dịch vụ cư dân (Trung tâm tự quản cư dân Eup/Myeon/Dong)",
+        "ja": "住民センター（邑・面・洞住民自治センター）",
+        "fil": "Sentro ng mga Residente (Eup/Myeon/Dong Residential Self-Governing Center)"
+      },
+      "fields": [
+        {
+          "id": "receipt_no",
+          "labels": {
+            "ko": "접수 번호",
+            "zh": "受理编号",
+            "vi": "Số tiếp nhận",
+            "ja": "受付番号",
+            "fil": "Numero ng Pagtanggap"
+          },
+          "type": "text",
+          "required": false,
+          "note": {
+            "ko": "기관에서 기재",
+            "zh": "由机关填写",
+            "vi": "Do cơ quan điền",
+            "ja": "機関が記入",
+            "fil": "Pinupunan ng opisina"
+          }
+        },
+        {
+          "id": "report_date",
+          "labels": {
+            "ko": "신고일",
+            "zh": "申报日期",
+            "vi": "Ngày đăng ký",
+            "ja": "届出日",
+            "fil": "Petsa ng Pag-ulat"
+          },
+          "type": "date",
+          "required": true,
+          "format": {
+            "ko": "년 월 일",
+            "zh": "年 月 日",
+            "vi": "Năm Tháng Ngày",
+            "ja": "年 月 日",
+            "fil": "Taon Buwan Araw"
+          }
+        },
+        {
+          "id": "reporter_name",
+          "labels": {
+            "ko": "전입자(신고인) 성명",
+            "zh": "迁入者（申报人）姓名",
+            "vi": "Họ tên người chuyển đến (người đăng ký)",
+            "ja": "転入者（届出人）氏名",
+            "fil": "Pangalan ng Lumilipat (Tagapag-ulat)"
+          },
+          "type": "text",
+          "required": true,
+          "example": "홍길동"
+        },
+        {
+          "id": "reporter_id",
+          "labels": {
+            "ko": "주민등록번호",
+            "zh": "居民登录号码",
+            "vi": "Số đăng ký cư trú",
+            "ja": "住民登録番号",
+            "fil": "Resident Registration Number"
+          },
+          "type": "text",
+          "required": true,
+          "format": {
+            "ko": "XXXXXX-XXXXXXX",
+            "zh": "XXXXXX-XXXXXXX",
+            "vi": "XXXXXX-XXXXXXX",
+            "ja": "XXXXXX-XXXXXXX",
+            "fil": "XXXXXX-XXXXXXX"
+          },
+          "example": "870101-1234567"
+        },
+        {
+          "id": "reporter_phone",
+          "labels": {
+            "ko": "연락처",
+            "zh": "联系电话",
+            "vi": "Số điện thoại",
+            "ja": "連絡先",
+            "fil": "Numero ng Telepono"
+          },
+          "type": "tel",
+          "required": true,
+          "example": "010-1234-5678"
+        },
+        {
+          "id": "prev_province",
+          "labels": {
+            "ko": "전에 살던 곳 - 시·도",
+            "zh": "原住址 - 市·道",
+            "vi": "Địa chỉ cũ - Tỉnh/Thành phố",
+            "ja": "以前の住所 - 市・道",
+            "fil": "Nakaraang Tirahan - Lungsod/Lalawigan"
+          },
+          "type": "text",
+          "required": true,
+          "example": "경기도"
+        },
+        {
+          "id": "prev_city",
+          "labels": {
+            "ko": "전에 살던 곳 - 시·군·구",
+            "zh": "原住址 - 市·郡·区",
+            "vi": "Địa chỉ cũ - Thành phố/Huyện/Quận",
+            "ja": "以前の住所 - 市・郡・区",
+            "fil": "Nakaraang Tirahan - Lungsod/Munisipyo/Distrito"
+          },
+          "type": "text",
+          "required": true,
+          "example": "광명시"
+        },
+        {
+          "id": "prev_head",
+          "labels": {
+            "ko": "세대주 성명",
+            "zh": "户主姓名",
+            "vi": "Họ tên chủ hộ",
+            "ja": "世帯主氏名",
+            "fil": "Pangalan ng Ulo ng Sambahayan"
+          },
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "current_address",
+          "labels": {
+            "ko": "현재 사는 곳 - 주소",
+            "zh": "现住址",
+            "vi": "Địa chỉ hiện tại",
+            "ja": "現住所",
+            "fil": "Kasalukuyang Tirahan"
+          },
+          "type": "text",
+          "required": true,
+          "example": "서울시 구로구 가마산로 245"
+        },
+        {
+          "id": "unit_detail",
+          "labels": {
+            "ko": "동 / 층 / 호",
+            "zh": "栋 / 层 / 室",
+            "vi": "Tòa nhà / Tầng / Phòng",
+            "ja": "棟 / 階 / 号室",
+            "fil": "Gusali / Palapag / Yunit"
+          },
+          "type": "text",
+          "required": false,
+          "example": "3층 303호"
+        },
+        {
+          "id": "move_reason",
+          "labels": {
+            "ko": "전입 사유",
+            "zh": "迁入原因",
+            "vi": "Lý do chuyển đến",
+            "ja": "転入理由",
+            "fil": "Dahilan ng Paglipat"
+          },
+          "type": "checkbox",
+          "required": true,
+          "options": [
+            {
+              "ko": "직업 (취업, 사업, 직장 이동 등)",
+              "zh": "职业（就业、创业、工作调动等）",
+              "vi": "Nghề nghiệp (việc làm, kinh doanh, chuyển việc...)",
+              "ja": "職業（就職、事業、転勤等）",
+              "fil": "Trabaho (pagtatrabaho, negosyo, paglipat ng trabaho)"
+            },
+            {
+              "ko": "가족 (가족과 함께 거주, 결혼, 분가 등)",
+              "zh": "家庭（与家人同住、结婚、分家等）",
+              "vi": "Gia đình (sống cùng gia đình, kết hôn, tách hộ...)",
+              "ja": "家族（家族との同居、結婚、分家等）",
+              "fil": "Pamilya (pamumuhay kasama ang pamilya, kasal, paghihiwalay ng bahay)"
+            },
+            {
+              "ko": "주택 (주택 구입, 계약 만료, 전세, 재계약 등)",
+              "zh": "住宅（购房、合同到期、租房、续约等）",
+              "vi": "Nhà ở (mua nhà, hết hạn hợp đồng, thuê nhà, gia hạn...)",
+              "ja": "住宅（住宅購入、契約満了、賃貸、再契約等）",
+              "fil": "Pabahay (pagbili ng bahay, pag-expire ng kontrata, renta, muling kontrata)"
+            },
+            {
+              "ko": "그 밖의 사유",
+              "zh": "其他原因",
+              "vi": "Lý do khác",
+              "ja": "その他の理由",
+              "fil": "Iba pang dahilan"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "id_reissue",
+      "category": "주민등록",
+      "titles": {
+        "ko": "주민등록증 재발급 신청서",
+        "zh": "居民登录证补发申请书",
+        "vi": "Đơn xin cấp lại Thẻ Cư trú",
+        "ja": "住民登録証再発行申請書",
+        "fil": "Kahilingan para sa Muling Pag-isyu ng Resident Registration Card"
+      },
+      "descriptions": {
+        "ko": "주민등록증을 분실하거나 훼손된 경우 신청합니다.",
+        "zh": "居民登录证丢失或损毁时申请。",
+        "vi": "Nộp đơn khi mất hoặc hỏng Thẻ Cư trú.",
+        "ja": "住民登録証を紛失または破損した場合に申請します。",
+        "fil": "Mag-apply kapag nawala o nasira ang Resident Registration Card."
+      },
+      "where": {
+        "ko": "주민센터(읍·면·동 주민자치센터)",
+        "zh": "居民服务中心（邑·面·洞 居民自治中心）",
+        "vi": "Trung tâm dịch vụ cư dân (Trung tâm tự quản cư dân Eup/Myeon/Dong)",
+        "ja": "住民センター（邑・面・洞住民自治センター）",
+        "fil": "Sentro ng mga Residente (Eup/Myeon/Dong Residential Self-Governing Center)"
+      },
+      "fields": [
+        {
+          "id": "name_korean",
+          "labels": {
+            "ko": "성명(한글)",
+            "zh": "姓名（韩文）",
+            "vi": "Họ tên (chữ Hàn)",
+            "ja": "氏名（ハングル）",
+            "fil": "Pangalan (Korean)"
+          },
+          "type": "text",
+          "required": true,
+          "example": "김구로"
+        },
+        {
+          "id": "resident_id",
+          "labels": {
+            "ko": "주민등록번호",
+            "zh": "居民登录号码",
+            "vi": "Số đăng ký cư trú",
+            "ja": "住民登録番号",
+            "fil": "Resident Registration Number"
+          },
+          "type": "text",
+          "required": true,
+          "format": {
+            "ko": "XXXXXX-XXXXXXX",
+            "zh": "XXXXXX-XXXXXXX",
+            "vi": "XXXXXX-XXXXXXX",
+            "ja": "XXXXXX-XXXXXXX",
+            "fil": "XXXXXX-XXXXXXX"
+          },
+          "example": "790101-1234567"
+        },
+        {
+          "id": "address_province",
+          "labels": {
+            "ko": "주소 - 시·도",
+            "zh": "地址 - 市·道",
+            "vi": "Địa chỉ - Tỉnh/Thành phố",
+            "ja": "住所 - 市・道",
+            "fil": "Tirahan - Lungsod/Lalawigan"
+          },
+          "type": "text",
+          "required": true,
+          "example": "서울특별시"
+        },
+        {
+          "id": "address_city",
+          "labels": {
+            "ko": "주소 - 시·군·구",
+            "zh": "地址 - 市·郡·区",
+            "vi": "Địa chỉ - Thành phố/Huyện/Quận",
+            "ja": "住所 - 市・郡・区",
+            "fil": "Tirahan - Lungsod/Munisipyo/Distrito"
+          },
+          "type": "text",
+          "required": true,
+          "example": "구로구"
+        },
+        {
+          "id": "phone",
+          "labels": {
+            "ko": "연락처",
+            "zh": "联系电话",
+            "vi": "Số điện thoại",
+            "ja": "連絡先",
+            "fil": "Numero ng Telepono"
+          },
+          "type": "tel",
+          "required": true,
+          "example": "010-1234-5678"
+        },
+        {
+          "id": "reason",
+          "labels": {
+            "ko": "재발급 사유",
+            "zh": "补发原因",
+            "vi": "Lý do cấp lại",
+            "ja": "再発行理由",
+            "fil": "Dahilan ng Muling Pag-isyu"
+          },
+          "type": "checkbox",
+          "required": true,
+          "options": [
+            {
+              "ko": "분실",
+              "zh": "丢失",
+              "vi": "Mất",
+              "ja": "紛失",
+              "fil": "Nawala"
+            },
+            {
+              "ko": "훼손",
+              "zh": "损毁",
+              "vi": "Hỏng",
+              "ja": "破損",
+              "fil": "Nasira"
+            },
+            {
+              "ko": "성명 변경",
+              "zh": "姓名变更",
+              "vi": "Thay đổi họ tên",
+              "ja": "氏名変更",
+              "fil": "Pagbabago ng Pangalan"
+            },
+            {
+              "ko": "주민등록번호 변경",
+              "zh": "居民登录号码变更",
+              "vi": "Thay đổi số đăng ký cư trú",
+              "ja": "住民登録番号変更",
+              "fil": "Pagbabago ng Resident Registration Number"
+            },
+            {
+              "ko": "용모(사진) 변경",
+              "zh": "外貌（照片）变更",
+              "vi": "Thay đổi ngoại hình (ảnh)",
+              "ja": "容貌（写真）変更",
+              "fil": "Pagbabago ng Hitsura (Larawan)"
+            },
+            {
+              "ko": "그 밖의 사유",
+              "zh": "其他原因",
+              "vi": "Lý do khác",
+              "ja": "その他の理由",
+              "fil": "Iba pang dahilan"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "birth",
+      "category": "가족관계",
+      "titles": {
+        "ko": "출생신고서",
+        "zh": "出生申报书",
+        "vi": "Đơn khai sinh",
+        "ja": "出生届",
+        "fil": "Sertipiko ng Kapanganakan"
+      },
+      "descriptions": {
+        "ko": "아이가 태어난 날로부터 1개월 이내에 신고해야 합니다.",
+        "zh": "必须在孩子出生之日起1个月内申报。",
+        "vi": "Phải đăng ký trong vòng 1 tháng kể từ ngày sinh của trẻ.",
+        "ja": "子どもが生まれた日から1か月以内に届け出なければなりません。",
+        "fil": "Kailangang irehistro sa loob ng 1 buwan mula sa araw ng kapanganakan ng bata."
+      },
+      "where": {
+        "ko": "주민센터(읍·면·동 주민자치센터)",
+        "zh": "居民服务中心（邑·面·洞 居民自治中心）",
+        "vi": "Trung tâm dịch vụ cư dân (Trung tâm tự quản cư dân Eup/Myeon/Dong)",
+        "ja": "住民センター（邑・面・洞住民自治センター）",
+        "fil": "Sentro ng mga Residente (Eup/Myeon/Dong Residential Self-Governing Center)"
+      },
+      "fields": [
+        {
+          "id": "child_name_korean",
+          "labels": {
+            "ko": "자녀 성명 (한글)",
+            "zh": "子女姓名（韩文）",
+            "vi": "Họ tên trẻ (chữ Hàn)",
+            "ja": "子どもの氏名（ハングル）",
+            "fil": "Pangalan ng Bata (Korean)"
+          },
+          "type": "text",
+          "required": true,
+          "example": "홍길동"
+        },
+        {
+          "id": "child_name_hanja",
+          "labels": {
+            "ko": "자녀 성명 (한자)",
+            "zh": "子女姓名（汉字）",
+            "vi": "Họ tên trẻ (chữ Hán)",
+            "ja": "子どもの氏名（漢字）",
+            "fil": "Pangalan ng Bata (Hanja)"
+          },
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "birth_datetime",
+          "labels": {
+            "ko": "출생일시",
+            "zh": "出生日期时间",
+            "vi": "Ngày giờ sinh",
+            "ja": "出生日時",
+            "fil": "Petsa at Oras ng Kapanganakan"
+          },
+          "type": "datetime",
+          "required": true,
+          "format": {
+            "ko": "YYYY년 MM월 DD일 HH시 MM분",
+            "zh": "YYYY年MM月DD日 HH时MM分",
+            "vi": "Ngày DD tháng MM năm YYYY, lúc HH giờ MM phút",
+            "ja": "YYYY年MM月DD日 HH時MM分",
+            "fil": "MM/DD/YYYY HH:MM"
+          },
+          "example": "2022년 1월 1일 23시 05분"
+        },
+        {
+          "id": "birth_place",
+          "labels": {
+            "ko": "출생장소",
+            "zh": "出生地点",
+            "vi": "Nơi sinh",
+            "ja": "出生場所",
+            "fil": "Lugar ng Kapanganakan"
+          },
+          "type": "radio",
+          "required": true,
+          "options": [
+            {
+              "ko": "자택",
+              "zh": "自家",
+              "vi": "Tại nhà",
+              "ja": "自宅",
+              "fil": "Bahay"
+            },
+            {
+              "ko": "병원",
+              "zh": "医院",
+              "vi": "Bệnh viện",
+              "ja": "病院",
+              "fil": "Ospital"
+            },
+            {
+              "ko": "기타",
+              "zh": "其他",
+              "vi": "Khác",
+              "ja": "その他",
+              "fil": "Iba pa"
+            }
+          ]
+        },
+        {
+          "id": "father_name",
+          "labels": {
+            "ko": "부 성명",
+            "zh": "父亲姓名",
+            "vi": "Họ tên cha",
+            "ja": "父の氏名",
+            "fil": "Pangalan ng Ama"
+          },
+          "type": "text",
+          "required": true,
+          "example": "홍형철"
+        },
+        {
+          "id": "father_id",
+          "labels": {
+            "ko": "부 주민등록번호",
+            "zh": "父亲居民登录号码",
+            "vi": "Số đăng ký cư trú của cha",
+            "ja": "父の住民登録番号",
+            "fil": "Resident Registration Number ng Ama"
+          },
+          "type": "text",
+          "required": true,
+          "example": "880101-1234567"
+        },
+        {
+          "id": "mother_name",
+          "labels": {
+            "ko": "모 성명",
+            "zh": "母亲姓名",
+            "vi": "Họ tên mẹ",
+            "ja": "母の氏名",
+            "fil": "Pangalan ng Ina"
+          },
+          "type": "text",
+          "required": true,
+          "example": "건경선"
+        },
+        {
+          "id": "mother_id",
+          "labels": {
+            "ko": "모 주민등록번호",
+            "zh": "母亲居民登录号码",
+            "vi": "Số đăng ký cư trú của mẹ",
+            "ja": "母の住民登録番号",
+            "fil": "Resident Registration Number ng Ina"
+          },
+          "type": "text",
+          "required": true,
+          "example": "891201-2345678"
+        },
+        {
+          "id": "reporter_name",
+          "labels": {
+            "ko": "신고인 성명",
+            "zh": "申报人姓名",
+            "vi": "Họ tên người khai",
+            "ja": "届出人氏名",
+            "fil": "Pangalan ng Tagapag-ulat"
+          },
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "reporter_phone",
+          "labels": {
+            "ko": "연락처",
+            "zh": "联系电话",
+            "vi": "Số điện thoại",
+            "ja": "連絡先",
+            "fil": "Numero ng Telepono"
+          },
+          "type": "tel",
+          "required": true,
+          "example": "010-1234-5678"
+        }
+      ]
+    },
+    {
+      "id": "marriage",
+      "category": "가족관계",
+      "titles": {
+        "ko": "혼인신고서",
+        "zh": "婚姻申报书",
+        "vi": "Đơn đăng ký kết hôn",
+        "ja": "婚姻届",
+        "fil": "Sertipiko ng Kasal"
+      },
+      "descriptions": {
+        "ko": "혼인신고는 당사자 쌍방과 성인 증인 2명이 서명 또는 도장을 찍어 신고합니다.",
+        "zh": "婚姻申报需要双方当事人和2名成年证人签名或盖章后申报。",
+        "vi": "Đăng ký kết hôn yêu cầu cả hai bên đương sự và 2 nhân chứng thành niên ký tên hoặc đóng dấu.",
+        "ja": "婚姻届は当事者双方と成人の証人2名が署名または押印して届け出ます。",
+        "fil": "Ang pagpaparehistro ng kasal ay nangangailangan ng lagda o selyo ng magkabilang partido at 2 saksi na may sapat na gulang."
+      },
+      "where": {
+        "ko": "주민센터(읍·면·동 주민자치센터) 또는 시·군·구청",
+        "zh": "居民服务中心（邑·面·洞 居民自治中心）或市·郡·区厅",
+        "vi": "Trung tâm dịch vụ cư dân hoặc Văn phòng Thành phố/Huyện/Quận",
+        "ja": "住民センターまたは市・郡・区庁",
+        "fil": "Sentro ng mga Residente o Tanggapan ng Lungsod/Munisipyo/Distrito"
+      },
+      "fields": [
+        {
+          "id": "groom_name",
+          "labels": {
+            "ko": "신랑 성명",
+            "zh": "新郎姓名",
+            "vi": "Họ tên chú rể",
+            "ja": "新郎の氏名",
+            "fil": "Pangalan ng Lalaki"
+          },
+          "type": "text",
+          "required": true,
+          "example": "홍길동"
+        },
+        {
+          "id": "groom_id",
+          "labels": {
+            "ko": "신랑 주민등록번호",
+            "zh": "新郎居民登录号码",
+            "vi": "Số đăng ký cư trú của chú rể",
+            "ja": "新郎の住民登録番号",
+            "fil": "Resident Registration Number ng Lalaki"
+          },
+          "type": "text",
+          "required": true,
+          "example": "880101-1234567"
+        },
+        {
+          "id": "groom_phone",
+          "labels": {
+            "ko": "신랑 전화",
+            "zh": "新郎电话",
+            "vi": "Điện thoại chú rể",
+            "ja": "新郎の電話",
+            "fil": "Telepono ng Lalaki"
+          },
+          "type": "tel",
+          "required": true,
+          "example": "010-1234-5678"
+        },
+        {
+          "id": "groom_birth",
+          "labels": {
+            "ko": "신랑 출생연월일",
+            "zh": "新郎出生年月日",
+            "vi": "Ngày tháng năm sinh của chú rể",
+            "ja": "新郎の生年月日",
+            "fil": "Kaarawan ng Lalaki"
+          },
+          "type": "date",
+          "required": true,
+          "example": "1988.01.01"
+        },
+        {
+          "id": "bride_name",
+          "labels": {
+            "ko": "신부 성명",
+            "zh": "新娘姓名",
+            "vi": "Họ tên cô dâu",
+            "ja": "新婦の氏名",
+            "fil": "Pangalan ng Babae"
+          },
+          "type": "text",
+          "required": true,
+          "example": "가호감"
+        },
+        {
+          "id": "bride_id",
+          "labels": {
+            "ko": "신부 주민등록번호",
+            "zh": "新娘居民登录号码",
+            "vi": "Số đăng ký cư trú của cô dâu",
+            "ja": "新婦の住民登録番号",
+            "fil": "Resident Registration Number ng Babae"
+          },
+          "type": "text",
+          "required": true,
+          "example": "891201-2345678"
+        },
+        {
+          "id": "bride_phone",
+          "labels": {
+            "ko": "신부 전화",
+            "zh": "新娘电话",
+            "vi": "Điện thoại cô dâu",
+            "ja": "新婦の電話",
+            "fil": "Telepono ng Babae"
+          },
+          "type": "tel",
+          "required": true,
+          "example": "010-1234-6789"
+        },
+        {
+          "id": "bride_birth",
+          "labels": {
+            "ko": "신부 출생연월일",
+            "zh": "新娘出生年月日",
+            "vi": "Ngày tháng năm sinh của cô dâu",
+            "ja": "新婦の生年月日",
+            "fil": "Kaarawan ng Babae"
+          },
+          "type": "date",
+          "required": true,
+          "example": "1989.12.01"
+        },
+        {
+          "id": "marriage_type",
+          "labels": {
+            "ko": "혼인 종류",
+            "zh": "婚姻类型",
+            "vi": "Loại hôn nhân",
+            "ja": "婚姻の種類",
+            "fil": "Uri ng Kasal"
+          },
+          "type": "radio",
+          "required": true,
+          "options": [
+            {
+              "ko": "초혼",
+              "zh": "初婚",
+              "vi": "Lần đầu kết hôn",
+              "ja": "初婚",
+              "fil": "Unang Kasal"
+            },
+            {
+              "ko": "재혼",
+              "zh": "再婚",
+              "vi": "Tái hôn",
+              "ja": "再婚",
+              "fil": "Muling Kasal"
+            }
+          ]
+        },
+        {
+          "id": "marriage_date",
+          "labels": {
+            "ko": "혼인 성립일",
+            "zh": "婚姻成立日期",
+            "vi": "Ngày thành lập hôn nhân",
+            "ja": "婚姻成立日",
+            "fil": "Petsa ng Pagtatatag ng Kasal"
+          },
+          "type": "date",
+          "required": true,
+          "example": "2017년 12월 28일"
+        }
+      ]
+    }
+  ]
+}
