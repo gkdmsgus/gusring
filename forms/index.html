@@ -6,204 +6,124 @@
   <title>구스링 – 구로 스마트 링</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --blue:   #1a4fa8;
-      --blue2:  #2563eb;
-      --light:  #eff6ff;
-      --border: #e5e7eb;
-      --text:   #1a1a2e;
-      --gray:   #6b7280;
-      --green:  #10b981;
-      --radius: 14px;
+      --blue: #1a4fa8; --blue2: #2563eb; --light: #eff6ff;
+      --border: #e5e7eb; --text: #1a1a2e; --gray: #6b7280;
+      --green: #10b981; --red: #ef4444; --radius: 14px;
     }
+    body { font-family: 'Segoe UI','Noto Sans KR',sans-serif; background:#f5f7fa; color:var(--text); min-height:100vh; }
 
-    body { font-family: 'Segoe UI', 'Noto Sans KR', sans-serif; background: #f5f7fa; color: var(--text); min-height: 100vh; }
+    /* Header */
+    .header { background:linear-gradient(135deg,var(--blue),var(--blue2)); color:white; padding:16px 20px; display:flex; align-items:center; gap:12px; }
+    .logo-ring { width:46px; height:46px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; box-shadow:0 0 0 3px rgba(255,255,255,0.4); }
+    .header h1 { font-size:18px; font-weight:800; }
+    .header p  { font-size:12px; opacity:.82; margin-top:2px; }
 
-    /* ── Header ── */
-    .header {
-      background: linear-gradient(135deg, var(--blue), var(--blue2));
-      color: white; padding: 16px 20px;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .logo-ring {
-      width: 46px; height: 46px; border-radius: 50%;
-      background: white; display: flex; align-items: center; justify-content: center;
-      font-size: 22px; flex-shrink: 0;
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.4);
-    }
-    .header h1 { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; }
-    .header p  { font-size: 12px; opacity: 0.82; margin-top: 2px; }
+    /* Steps */
+    .steps { display:flex; background:white; border-bottom:1px solid var(--border); padding:0 16px; overflow-x:auto; gap:4px; }
+    .step { display:flex; align-items:center; gap:6px; padding:12px 10px; font-size:12px; color:#9ca3af; white-space:nowrap; }
+    .step.active { color:var(--blue2); font-weight:700; }
+    .step.done   { color:var(--green); }
+    .step-num { width:22px; height:22px; border-radius:50%; background:#e5e7eb; color:#6b7280; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; flex-shrink:0; }
+    .step.active .step-num { background:var(--blue2); color:white; }
+    .step.done   .step-num { background:var(--green); color:white; }
+    .sep { color:#d1d5db; display:flex; align-items:center; font-size:14px; }
 
-    /* ── Steps ── */
-    .steps {
-      display: flex; background: white;
-      border-bottom: 1px solid var(--border);
-      padding: 0 16px; overflow-x: auto; gap: 4px;
-    }
-    .step {
-      display: flex; align-items: center; gap: 6px;
-      padding: 12px 10px; font-size: 12px; color: #9ca3af; white-space: nowrap; cursor: default;
-    }
-    .step.active { color: var(--blue2); font-weight: 700; }
-    .step.done   { color: var(--green); }
-    .step-num {
-      width: 22px; height: 22px; border-radius: 50%;
-      background: #e5e7eb; color: #6b7280;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; flex-shrink: 0;
-    }
-    .step.active .step-num { background: var(--blue2); color: white; }
-    .step.done   .step-num { background: var(--green); color: white; }
-    .sep { color: #d1d5db; display: flex; align-items: center; font-size: 14px; }
+    /* Main */
+    .main { padding:20px 16px; max-width:700px; margin:0 auto; padding-bottom:80px; }
+    .section-title { font-size:14px; font-weight:700; color:#374151; margin-bottom:14px; }
 
-    /* ── Main ── */
-    .main { padding: 20px 16px; max-width: 700px; margin: 0 auto; }
-    .section-title { font-size: 14px; font-weight: 700; color: #374151; margin-bottom: 14px; }
+    /* Language */
+    .lang-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:10px; margin-bottom:28px; }
+    .lang-card { background:white; border:2px solid var(--border); border-radius:var(--radius); padding:18px 12px; cursor:pointer; transition:all .16s; text-align:center; }
+    .lang-card:hover  { border-color:#93c5fd; transform:translateY(-2px); }
+    .lang-card.active { border-color:var(--blue2); background:var(--light); }
+    .lang-flag { width:48px; height:32px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; letter-spacing:.5px; margin:0 auto 8px; color:white; }
+    .flag-kr  { background:#cd2e3a; }
+    .flag-zh  { background:#de2910; }
+    .flag-vi  { background:#da251d; }
+    .flag-ja  { background:white; color:#bc002d; border:1.5px solid var(--border); }
+    .flag-fil { background:linear-gradient(180deg,#0038a8 50%,#ce1127 50%); }
+    .lang-native { font-size:14px; font-weight:700; color:#1e3a8a; }
+    .lang-sub    { font-size:11px; color:var(--gray); margin-top:2px; }
 
-    /* ── Language Grid ── */
-    .lang-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: 10px;
-      margin-bottom: 28px;
-    }
-    .lang-card {
-      background: white; border: 2px solid var(--border); border-radius: var(--radius);
-      padding: 18px 12px; cursor: pointer; transition: all 0.16s; text-align: center;
-    }
-    .lang-card:hover  { border-color: #93c5fd; transform: translateY(-2px); }
-    .lang-card.active { border-color: var(--blue2); background: var(--light); }
-    .lang-flag {
-      width: 48px; height: 32px; border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 800; letter-spacing: 0.5px;
-      margin: 0 auto 8px; color: white;
-    }
-    .flag-kr { background: linear-gradient(135deg, #cd2e3a, #003478); }
-    .flag-zh { background: linear-gradient(135deg, #de2910, #ffde00); color: #de2910; background: #de2910; }
-    .flag-vi { background: linear-gradient(135deg, #da251d, #da251d); }
-    .flag-ja { background: linear-gradient(135deg, #bc002d, #fff); color: #bc002d; background: #fff; border: 1.5px solid #e5e7eb; }
-    .flag-fil { background: linear-gradient(135deg, #0038a8, #ce1127); }
-    .lang-native { font-size: 14px; font-weight: 700; color: #1e3a8a; }
-    .lang-sub    { font-size: 11px; color: var(--gray); margin-top: 2px; }
+    /* Category */
+    .cat-tabs { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+    .cat-tab { padding:6px 14px; border-radius:20px; border:1px solid var(--border); background:white; font-size:12px; cursor:pointer; transition:all .14s; }
+    .cat-tab.active { background:#1e3a8a; color:white; border-color:#1e3a8a; }
 
-    /* ── Category Tabs ── */
-    .cat-tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
-    .cat-tab {
-      padding: 6px 14px; border-radius: 20px;
-      border: 1px solid var(--border); background: white;
-      font-size: 12px; cursor: pointer; transition: all 0.14s;
-    }
-    .cat-tab.active { background: #1e3a8a; color: white; border-color: #1e3a8a; }
+    /* Form List */
+    .form-list { display:flex; flex-direction:column; gap:10px; margin-bottom:24px; }
+    .form-card { background:white; border:2px solid var(--border); border-radius:var(--radius); padding:16px; cursor:pointer; transition:all .16s; display:flex; align-items:center; gap:14px; }
+    .form-card:hover { border-color:#93c5fd; transform:translateX(3px); }
+    .form-icon { width:42px; height:42px; border-radius:11px; background:#dbeafe; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+    .form-card-body  { flex:1; }
+    .form-card-title { font-size:14px; font-weight:700; color:#1e3a8a; }
+    .form-card-desc  { font-size:11px; color:var(--gray); margin-top:3px; line-height:1.5; }
+    .form-card-arr   { color:#9ca3af; font-size:18px; }
 
-    /* ── Form List ── */
-    .form-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-    .form-card {
-      background: white; border: 2px solid var(--border); border-radius: var(--radius);
-      padding: 16px; cursor: pointer; transition: all 0.16s;
-      display: flex; align-items: center; gap: 14px;
-    }
-    .form-card:hover { border-color: #93c5fd; transform: translateX(3px); }
-    .form-icon {
-      width: 42px; height: 42px; border-radius: 11px;
-      background: #dbeafe; display: flex; align-items: center; justify-content: center;
-      font-size: 20px; flex-shrink: 0;
-    }
-    .form-card-body  { flex: 1; }
-    .form-card-title { font-size: 14px; font-weight: 700; color: #1e3a8a; }
-    .form-card-desc  { font-size: 11px; color: var(--gray); margin-top: 3px; line-height: 1.5; }
-    .form-card-arr   { color: #9ca3af; font-size: 18px; }
+    /* Detail */
+    .back-btn { display:flex; align-items:center; gap:5px; background:none; border:none; color:var(--gray); font-size:13px; cursor:pointer; margin-bottom:16px; padding:0; }
+    .back-btn:hover { color:#1e3a8a; }
+    .detail-card { background:white; border-radius:20px; overflow:hidden; margin-bottom:16px; }
+    .detail-head { background:linear-gradient(135deg,var(--blue),var(--blue2)); color:white; padding:20px 20px 16px; }
+    .detail-head .ko-label { font-size:11px; opacity:.75; }
+    .detail-head .native-title { font-size:20px; font-weight:800; margin:4px 0 10px; }
+    .where-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.2); border-radius:8px; padding:5px 10px; font-size:11px; }
+    .tts-row { display:flex; align-items:center; gap:10px; padding:12px 20px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+    .tts-btn { display:flex; align-items:center; gap:6px; background:#f0fdf4; border:1.5px solid #86efac; color:#15803d; border-radius:9px; padding:7px 12px; font-size:12px; cursor:pointer; font-weight:600; transition:all .14s; flex-shrink:0; }
+    .tts-btn:hover { background:#dcfce7; }
+    .desc-text { font-size:12px; color:#78350f; background:#fefce8; border:1px solid #fde68a; border-radius:9px; padding:10px 12px; flex:1; line-height:1.6; min-width:0; }
+    .form-image-wrap { position:relative; padding:16px; border-bottom:1px solid var(--border); }
+    .form-img { width:100%; border-radius:10px; border:1px solid var(--border); display:block; cursor:zoom-in; }
+    .img-caption { text-align:center; font-size:11px; color:var(--gray); margin-top:8px; }
+    .lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:999; align-items:center; justify-content:center; padding:12px; cursor:zoom-out; }
+    .lightbox.open { display:flex; }
+    .lightbox img { max-width:100%; max-height:100%; border-radius:8px; object-fit:contain; }
+    .field-guide { padding:16px 20px; }
+    .guide-title { font-size:13px; font-weight:700; color:#374151; margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+    .field-row { display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid #f3f4f6; }
+    .field-row:last-child { border-bottom:none; }
+    .field-num { width:24px; height:24px; border-radius:50%; flex-shrink:0; background:var(--blue2); color:white; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; margin-top:1px; }
+    .field-body { flex:1; }
+    .field-native { font-size:13px; font-weight:700; color:#1e3a8a; }
+    .field-ko     { font-size:11px; color:var(--gray); margin-top:1px; }
+    .field-note   { font-size:11px; color:#78350f; background:#fefce8; border-radius:6px; padding:3px 7px; margin-top:4px; display:inline-block; }
+    .field-ex     { font-size:11px; color:#374151; margin-top:3px; }
+    .field-ex code { background:#f3f4f6; border-radius:4px; padding:1px 5px; font-family:monospace; }
+    .req-dot { width:6px; height:6px; border-radius:50%; background:var(--red); display:inline-block; margin-left:4px; vertical-align:middle; }
+    .options-wrap { display:flex; flex-wrap:wrap; gap:5px; margin-top:5px; }
+    .opt-chip { padding:4px 10px; border-radius:20px; font-size:11px; border:1px solid var(--border); background:#f9fafb; color:#374151; }
+    .opt-sub { font-size:10px; color:#9ca3af; }
 
-    /* ── Detail ── */
-    .back-btn {
-      display: flex; align-items: center; gap: 5px;
-      background: none; border: none; color: var(--gray);
-      font-size: 13px; cursor: pointer; margin-bottom: 16px; padding: 0;
-    }
-    .back-btn:hover { color: #1e3a8a; }
+    /* Feedback FAB */
+    .fab { position:fixed; bottom:20px; right:20px; z-index:100; background:linear-gradient(135deg,var(--blue),var(--blue2)); color:white; border:none; border-radius:50px; padding:12px 20px; font-size:13px; font-weight:700; cursor:pointer; box-shadow:0 4px 16px rgba(37,99,235,.4); display:flex; align-items:center; gap:8px; transition:all .16s; }
+    .fab:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(37,99,235,.45); }
 
-    .detail-card { background: white; border-radius: 20px; overflow: hidden; margin-bottom: 16px; }
+    /* Modal */
+    .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:200; align-items:flex-end; justify-content:center; }
+    .modal-bg.open { display:flex; }
+    .modal { background:white; border-radius:24px 24px 0 0; padding:24px 20px; width:100%; max-width:500px; }
+    .modal-title { font-size:16px; font-weight:800; color:#1e3a8a; margin-bottom:4px; }
+    .modal-sub   { font-size:12px; color:var(--gray); margin-bottom:16px; }
+    .modal textarea { width:100%; border:1.5px solid var(--border); border-radius:10px; padding:12px; font-size:13px; resize:none; height:100px; font-family:inherit; }
+    .modal textarea:focus { outline:none; border-color:var(--blue2); }
+    .modal-btns { display:flex; gap:10px; margin-top:12px; }
+    .btn-cancel { flex:1; padding:12px; border:1.5px solid var(--border); border-radius:10px; background:white; font-size:14px; cursor:pointer; }
+    .btn-submit { flex:2; padding:12px; background:linear-gradient(135deg,var(--blue),var(--blue2)); color:white; border:none; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; }
+    .modal-thanks { text-align:center; padding:20px 0; font-size:15px; color:var(--green); font-weight:700; }
 
-    /* title bar */
-    .detail-head {
-      background: linear-gradient(135deg, var(--blue), var(--blue2));
-      color: white; padding: 20px 20px 16px;
-    }
-    .detail-head .ko-label { font-size: 11px; opacity: 0.75; }
-    .detail-head .native-title { font-size: 20px; font-weight: 800; margin: 4px 0 10px; }
-    .where-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,0.2); border-radius: 8px;
-      padding: 5px 10px; font-size: 11px;
-    }
-    .tts-row {
-      display: flex; align-items: center; gap: 10px;
-      padding: 12px 20px; border-bottom: 1px solid var(--border);
-    }
-    .tts-btn {
-      display: flex; align-items: center; gap: 6px;
-      background: #f0fdf4; border: 1.5px solid #86efac; color: #15803d;
-      border-radius: 9px; padding: 7px 12px; font-size: 12px;
-      cursor: pointer; font-weight: 600; transition: all 0.14s;
-    }
-    .tts-btn:hover { background: #dcfce7; }
-    .desc-text { font-size: 12px; color: #78350f; background: #fefce8; border: 1px solid #fde68a; border-radius: 9px; padding: 10px 12px; flex: 1; line-height: 1.6; }
+    /* Stats Bar */
+    .stats-bar { background:white; border-radius:12px; padding:12px 16px; margin-bottom:16px; display:flex; gap:16px; font-size:12px; color:var(--gray); border:1px solid var(--border); }
+    .stat-item { display:flex; align-items:center; gap:6px; }
+    .stat-num  { font-weight:700; color:#1e3a8a; font-size:15px; }
 
-    /* ── Form Image + Fields ── */
-    .form-image-wrap {
-      position: relative; padding: 16px; border-bottom: 1px solid var(--border);
-    }
-    .form-img {
-      width: 100%; border-radius: 10px; border: 1px solid var(--border);
-      display: block; cursor: zoom-in;
-    }
-    .img-caption {
-      text-align: center; font-size: 11px; color: var(--gray); margin-top: 8px;
-    }
-    .lightbox {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.85); z-index: 999;
-      align-items: center; justify-content: center; padding: 12px;
-      cursor: zoom-out;
-    }
-    .lightbox.open { display: flex; }
-    .lightbox img { max-width: 100%; max-height: 100%; border-radius: 8px; object-fit: contain; }
-
-    /* field guide */
-    .field-guide { padding: 16px 20px; }
-    .guide-title { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-    .field-row {
-      display: flex; gap: 12px; align-items: flex-start;
-      padding: 10px 0; border-bottom: 1px solid #f3f4f6;
-    }
-    .field-row:last-child { border-bottom: none; }
-    .field-num {
-      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
-      background: var(--blue2); color: white;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; margin-top: 1px;
-    }
-    .field-body { flex: 1; }
-    .field-native { font-size: 13px; font-weight: 700; color: #1e3a8a; }
-    .field-ko     { font-size: 11px; color: var(--gray); margin-top: 1px; }
-    .field-note   { font-size: 11px; color: #78350f; background: #fefce8; border-radius: 6px; padding: 3px 7px; margin-top: 4px; display: inline-block; }
-    .field-ex     { font-size: 11px; color: #374151; margin-top: 3px; }
-    .field-ex code { background: #f3f4f6; border-radius: 4px; padding: 1px 5px; font-family: monospace; }
-    .req-dot { width: 6px; height: 6px; border-radius: 50%; background: #ef4444; display: inline-block; margin-left: 4px; vertical-align: middle; }
-
-    /* options */
-    .options-wrap { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
-    .opt-chip {
-      padding: 4px 10px; border-radius: 20px; font-size: 11px;
-      border: 1px solid var(--border); background: #f9fafb; color: #374151;
-    }
-    .opt-sub { font-size: 10px; color: #9ca3af; }
-
-    .hidden { display: none !important; }
+    .hidden { display:none !important; }
+    @media(max-width:480px){ .lang-grid{grid-template-columns:repeat(2,1fr);} }
   </style>
 </head>
 <body>
 
-<!-- Header -->
 <div class="header">
   <div class="logo-ring">💍</div>
   <div>
@@ -212,7 +132,6 @@
   </div>
 </div>
 
-<!-- Steps -->
 <div class="steps">
   <div class="step active" id="s1"><div class="step-num">1</div><span id="s1-lbl">언어 선택</span></div>
   <div class="sep">›</div>
@@ -223,7 +142,7 @@
 
 <div class="main">
 
-  <!-- ── Screen 1: Language ── -->
+  <!-- Screen 1 -->
   <div id="sc-lang">
     <p class="section-title" id="lang-prompt">언어를 선택하세요</p>
     <div class="lang-grid">
@@ -235,19 +154,25 @@
     </div>
   </div>
 
-  <!-- ── Screen 2: Form List ── -->
+  <!-- Screen 2 -->
   <div id="sc-forms" class="hidden">
     <button class="back-btn" onclick="go(1)">← <span id="back1-lbl">언어 다시 선택</span></button>
+    <div class="stats-bar" id="stats-bar">
+      <div class="stat-item">👥 <span class="stat-num" id="stat-visits">0</span> <span id="stat-v-lbl">방문</span></div>
+      <div class="stat-item">📄 <span class="stat-num" id="stat-views">0</span> <span id="stat-f-lbl">서식 조회</span></div>
+    </div>
     <p class="section-title" id="form-prompt">서식을 선택하세요</p>
     <div class="cat-tabs">
       <div class="cat-tab active" onclick="filterCat('all',this)"><span id="cat-all">전체</span></div>
       <div class="cat-tab" onclick="filterCat('주민등록',this)"><span id="cat-r">주민등록</span></div>
       <div class="cat-tab" onclick="filterCat('가족관계',this)"><span id="cat-f">가족관계</span></div>
+      <div class="cat-tab" onclick="filterCat('여권',this)"><span id="cat-p">여권</span></div>
+      <div class="cat-tab" onclick="filterCat('기타',this)"><span id="cat-e">기타</span></div>
     </div>
     <div class="form-list" id="form-list"></div>
   </div>
 
-  <!-- ── Screen 3: Detail ── -->
+  <!-- Screen 3 -->
   <div id="sc-detail" class="hidden">
     <button class="back-btn" onclick="go(2)">← <span id="back2-lbl">서식 목록으로</span></button>
     <div class="detail-card">
@@ -273,89 +198,156 @@
 
 </div>
 
+<!-- Feedback FAB -->
+<button class="fab" onclick="openFeedback()">💬 <span id="fab-lbl">피드백</span></button>
+
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <img id="lb-img" src="" alt="서식 원본" />
 </div>
 
+<!-- Feedback Modal -->
+<div class="modal-bg" id="modal-bg" onclick="closeFeedback(event)">
+  <div class="modal">
+    <div id="modal-form-area">
+      <div class="modal-title" id="modal-title">불편한 점이 있으신가요?</div>
+      <div class="modal-sub" id="modal-sub">서식 오류, 번역 이상, 개선 의견 모두 환영해요</div>
+      <textarea id="feedback-text" placeholder="내용을 입력해주세요..."></textarea>
+      <div class="modal-btns">
+        <button class="btn-cancel" onclick="closeFeedback()"><span id="modal-cancel">취소</span></button>
+        <button class="btn-submit" onclick="submitFeedback()"><span id="modal-send">보내기</span></button>
+      </div>
+    </div>
+    <div class="modal-thanks hidden" id="modal-thanks">
+      ✅ 소중한 의견 감사합니다!<br><span style="font-size:12px;color:#6b7280;font-weight:400">더 좋은 서비스를 만들겠습니다.</span>
+    </div>
+  </div>
+</div>
+
 <script>
-/* ── Translations UI strings ── */
+/* ── UI Strings ── */
 const UI = {
-  ko:  { hTitle:'구스링', hSub:'Guro Smart Ring · 구로구 다국어 민원서식 가이드', s1:'언어 선택', s2:'서식 선택', s3:'서식 안내', langPrompt:'언어를 선택하세요', formPrompt:'서식을 선택하세요', tts:'설명 듣기', back1:'언어 다시 선택', back2:'서식 목록으로', catAll:'전체', catR:'주민등록', catF:'가족관계', guideTitle:'항목별 안내', imgCap:'이미지를 탭하면 크게 볼 수 있어요', req:'필수' },
-  zh:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多语言民愿表格指南', s1:'选择语言', s2:'选择表格', s3:'表格说明', langPrompt:'请选择语言', formPrompt:'请选择表格', tts:'收听说明', back1:'重新选择语言', back2:'返回列表', catAll:'全部', catR:'居民登录', catF:'家庭关系', guideTitle:'各项目说明', imgCap:'点击图片可放大查看', req:'必填' },
-  vi:  { hTitle:'구스링', hSub:'Guro Smart Ring · Hướng dẫn mẫu đơn đa ngôn ngữ Guro-gu', s1:'Chọn ngôn ngữ', s2:'Chọn mẫu đơn', s3:'Hướng dẫn', langPrompt:'Vui lòng chọn ngôn ngữ', formPrompt:'Vui lòng chọn mẫu đơn', tts:'Nghe hướng dẫn', back1:'Chọn lại ngôn ngữ', back2:'Trở về danh sách', catAll:'Tất cả', catR:'Đăng ký cư trú', catF:'Quan hệ gia đình', guideTitle:'Hướng dẫn từng mục', imgCap:'Nhấn vào ảnh để phóng to', req:'Bắt buộc' },
-  ja:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多言語民願書式案内', s1:'言語選択', s2:'書式選択', s3:'書式案内', langPrompt:'言語を選択してください', formPrompt:'書式を選択してください', tts:'説明を聞く', back1:'言語を再選択', back2:'書式一覧へ', catAll:'全て', catR:'住民登録', catF:'家族関係', guideTitle:'各項目の案内', imgCap:'画像をタップすると拡大できます', req:'必須' },
-  fil: { hTitle:'구스링', hSub:'Guro Smart Ring · Gabay sa Multilingual na Form ng Guro-gu', s1:'Pumili ng Wika', s2:'Pumili ng Form', s3:'Gabay', langPrompt:'Pumili ng wika', formPrompt:'Pumili ng form', tts:'Pakinggan', back1:'Pumili Muli ng Wika', back2:'Bumalik sa Listahan', catAll:'Lahat', catR:'Pagpaparehistro', catF:'Relasyong Pampamilya', guideTitle:'Gabay sa Bawat Aytem', imgCap:'I-tap ang larawan para palakihin', req:'Kailangan' },
+  ko:  { hTitle:'구스링', hSub:'Guro Smart Ring · 구로구 다국어 민원서식 가이드', s1:'언어 선택', s2:'서식 선택', s3:'서식 안내', langPrompt:'언어를 선택하세요', formPrompt:'서식을 선택하세요', tts:'설명 듣기', back1:'언어 다시 선택', back2:'서식 목록으로', catAll:'전체', catR:'주민등록', catF:'가족관계', catP:'여권', catE:'기타', guideTitle:'항목별 안내', imgCap:'이미지를 탭하면 크게 볼 수 있어요', fab:'피드백', modalTitle:'불편한 점이 있으신가요?', modalSub:'서식 오류, 번역 이상, 개선 의견 모두 환영해요', modalCancel:'취소', modalSend:'보내기', statV:'방문', statF:'서식 조회' },
+  zh:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多语言民愿表格指南', s1:'选择语言', s2:'选择表格', s3:'表格说明', langPrompt:'请选择语言', formPrompt:'请选择表格', tts:'收听说明', back1:'重新选择语言', back2:'返回列表', catAll:'全部', catR:'居民登录', catF:'家庭关系', catP:'护照', catE:'其他', guideTitle:'各项目说明', imgCap:'点击图片可放大查看', fab:'反馈', modalTitle:'有什么不便之处吗？', modalSub:'表格错误、翻译问题、改进意见均欢迎', modalCancel:'取消', modalSend:'发送', statV:'访问', statF:'表格查看' },
+  vi:  { hTitle:'구스링', hSub:'Guro Smart Ring · Hướng dẫn mẫu đơn đa ngôn ngữ Guro-gu', s1:'Chọn ngôn ngữ', s2:'Chọn mẫu đơn', s3:'Hướng dẫn', langPrompt:'Vui lòng chọn ngôn ngữ', formPrompt:'Vui lòng chọn mẫu đơn', tts:'Nghe hướng dẫn', back1:'Chọn lại ngôn ngữ', back2:'Trở về danh sách', catAll:'Tất cả', catR:'Đăng ký cư trú', catF:'Quan hệ gia đình', catP:'Hộ chiếu', catE:'Khác', guideTitle:'Hướng dẫn từng mục', imgCap:'Nhấn vào ảnh để phóng to', fab:'Phản hồi', modalTitle:'Bạn có gặp khó khăn gì không?', modalSub:'Lỗi mẫu đơn, dịch sai, ý kiến cải thiện đều được chào đón', modalCancel:'Hủy', modalSend:'Gửi', statV:'lượt truy cập', statF:'lượt xem' },
+  ja:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多言語民願書式案内', s1:'言語選択', s2:'書式選択', s3:'書式案内', langPrompt:'言語を選択してください', formPrompt:'書式を選択してください', tts:'説明を聞く', back1:'言語を再選択', back2:'書式一覧へ', catAll:'全て', catR:'住民登録', catF:'家族関係', catP:'パスポート', catE:'その他', guideTitle:'各項目の案内', imgCap:'画像をタップすると拡大できます', fab:'フィードバック', modalTitle:'不便な点はありますか？', modalSub:'書式エラー、翻訳の誤り、改善意見を歓迎します', modalCancel:'キャンセル', modalSend:'送信', statV:'訪問', statF:'書式閲覧' },
+  fil: { hTitle:'구스링', hSub:'Guro Smart Ring · Gabay sa Multilingual na Form ng Guro-gu', s1:'Pumili ng Wika', s2:'Pumili ng Form', s3:'Gabay', langPrompt:'Pumili ng wika', formPrompt:'Pumili ng form', tts:'Pakinggan', back1:'Pumili Muli ng Wika', back2:'Bumalik sa Listahan', catAll:'Lahat', catR:'Pagpaparehistro', catF:'Relasyong Pampamilya', catP:'Pasaporte', catE:'Iba pa', guideTitle:'Gabay sa Bawat Aytem', imgCap:'I-tap ang larawan para palakihin', fab:'Feedback', modalTitle:'May hirap ka ba?', modalSub:'Mga error sa form, maling salin, o mungkahi — lahat ay tinatanggap', modalCancel:'Kanselahin', modalSend:'Ipadala', statV:'bisita', statF:'form na tiningnan' },
 };
 
-/* ── Form Data (inline – no fetch dependency) ── */
+/* ── Form Data ── */
 const FORMS = [
+  // ── 주민등록 ──
   {
-    id: 'move_in', cat: '주민등록',
-    icon: '🏠',
-    img: 'https://www.guro.go.kr/DATA/bbs/1140/2023/08/08/fcf3b1d9-e50b-48ab-b6e9-5c6f6d9a2503291CFADAB3AEF8B3.png',
-    title: { ko:'전입신고서 (세대 모두 이동)', zh:'迁入申报书（全体成员迁移）', vi:'Đơn đăng ký chuyển đến (Toàn hộ)', ja:'転入届（世帯全員移動）', fil:'Abiso ng Paglipat (Buong Sambahayan)' },
-    desc:  { ko:'세대 전원이 함께 이사하는 경우, 이사한 날로부터 14일 이내에 가까운 주민센터에 신청하세요.', zh:'全体家庭成员一同搬迁时，必须在搬迁之日起14天内到附近居民服务中心申请。', vi:'Khi toàn bộ hộ gia đình chuyển đi, hãy đến trung tâm dịch vụ cư dân gần nhất trong vòng 14 ngày.', ja:'世帯全員が一緒に引越しする場合、引越しの日から14日以内に最寄りの住民センターで申請してください。', fil:'Kapag lumipat ang buong sambahayan, pumunta sa pinakamalapit na sentro ng mga residente sa loob ng 14 na araw.' },
-    where: { ko:'주민센터 (읍·면·동)', zh:'居民服务中心', vi:'Trung tâm dịch vụ cư dân', ja:'住民センター', fil:'Sentro ng mga Residente' },
-    fields: [
-      { label:{ ko:'접수 번호', zh:'受理编号', vi:'Số tiếp nhận', ja:'受付番号', fil:'Numero ng Pagtanggap' }, req:false, note:{ ko:'기관에서 기재', zh:'由机关填写', vi:'Do cơ quan điền', ja:'機関が記入', fil:'Pinupunan ng opisina' } },
-      { label:{ ko:'신고일 (년·월·일)', zh:'申报日期（年·月·日）', vi:'Ngày đăng ký (năm·tháng·ngày)', ja:'届出日（年·月·日）', fil:'Petsa ng Pag-ulat (Taon·Buwan·Araw)' }, req:true, ex:'2026. 3. 26' },
+    id:'move_in_all', cat:'주민등록', icon:'🏠',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2023/08/08/fcf3b1d9-e50b-48ab-b6e9-5c6f6d9a2503291CFADAB3AEF8B3.png',
+    title:{ ko:'전입신고서 (세대 모두 이동)', zh:'迁入申报书（全体成员迁移）', vi:'Đơn đăng ký chuyển đến (Toàn hộ)', ja:'転入届（世帯全員移動）', fil:'Abiso ng Paglipat (Buong Sambahayan)' },
+    desc:{ ko:'세대 전원이 함께 이사할 때 작성합니다. 이사한 날로부터 14일 이내에 주민센터에 신청하세요.', zh:'全体家庭成员一同搬迁时填写。必须在搬迁之日起14天内到居民服务中心申请。', vi:'Điền khi toàn bộ hộ gia đình chuyển đi. Đến trung tâm dịch vụ cư dân trong vòng 14 ngày.', ja:'世帯全員が一緒に引越しするときに作成します。引越しの日から14日以内に住民センターへ。', fil:'Punan kapag lumipat ang buong sambahayan. Pumunta sa sentro ng mga residente sa loob ng 14 na araw.' },
+    where:{ ko:'주민센터 (읍·면·동)', zh:'居民服务中心', vi:'Trung tâm dịch vụ cư dân', ja:'住民センター', fil:'Sentro ng mga Residente' },
+    fields:[
+      { label:{ ko:'접수 번호', zh:'受理编号', vi:'Số tiếp nhận', ja:'受付番号', fil:'Numero ng Pagtanggap' }, req:false, note:{ ko:'기관 기재', zh:'由机关填写', vi:'Do cơ quan điền', ja:'機関が記入', fil:'Pinupunan ng opisina' } },
+      { label:{ ko:'신고일', zh:'申报日期', vi:'Ngày đăng ký', ja:'届出日', fil:'Petsa ng Pag-ulat' }, req:true, ex:'2026. 3. 26' },
       { label:{ ko:'전입자 성명', zh:'迁入者姓名', vi:'Họ tên người chuyển đến', ja:'転入者氏名', fil:'Pangalan ng Lumilipat' }, req:true, ex:'홍길동' },
-      { label:{ ko:'주민등록번호', zh:'居民登录号码', vi:'Số đăng ký cư trú', ja:'住民登録番号', fil:'Resident Registration Number' }, req:true, ex:'870101-1234567', note:{ ko:'뒷자리는 가림 처리', zh:'后半部分可遮盖', vi:'Có thể che phần sau', ja:'後半は隠してOK', fil:'Maaaring itago ang huling digit' } },
-      { label:{ ko:'연락처', zh:'联系电话', vi:'Số điện thoại', ja:'連絡先', fil:'Numero ng Telepono' }, req:true, ex:'010-1234-5678' },
-      { label:{ ko:'전에 살던 곳 – 시·도', zh:'原住址 – 市·道', vi:'Địa chỉ cũ – Tỉnh/Thành phố', ja:'以前の住所 – 市·道', fil:'Nakaraang Tirahan – Lalawigan' }, req:true, ex:'경기도' },
-      { label:{ ko:'전에 살던 곳 – 시·군·구', zh:'原住址 – 市·郡·区', vi:'Địa chỉ cũ – Quận/Huyện', ja:'以前の住所 – 市·郡·区', fil:'Nakaraang Tirahan – Lungsod/Distrito' }, req:true, ex:'광명시' },
+      { label:{ ko:'주민등록번호', zh:'居民登录号码', vi:'Số đăng ký cư trú', ja:'住民登録番号', fil:'Resident Registration No.' }, req:true, ex:'870101-1234567' },
+      { label:{ ko:'연락처', zh:'联系电话', vi:'Số điện thoại', ja:'連絡先', fil:'Telepono' }, req:true, ex:'010-1234-5678' },
+      { label:{ ko:'전에 살던 곳 – 시·도', zh:'原住址 – 市·道', vi:'Địa chỉ cũ – Tỉnh/TP', ja:'以前の住所 – 市·道', fil:'Nakaraang Tirahan – Lalawigan' }, req:true, ex:'경기도' },
+      { label:{ ko:'전에 살던 곳 – 시·군·구', zh:'原住址 – 市·郡·区', vi:'Địa chỉ cũ – Quận/Huyện', ja:'以前の住所 – 市·郡·区', fil:'Nakaraang Tirahan – Lungsod' }, req:true, ex:'광명시' },
       { label:{ ko:'세대주 성명', zh:'户主姓名', vi:'Họ tên chủ hộ', ja:'世帯主氏名', fil:'Pangalan ng Ulo ng Sambahayan' }, req:true },
-      { label:{ ko:'현재 사는 곳 – 주소', zh:'现住址', vi:'Địa chỉ hiện tại', ja:'現住所', fil:'Kasalukuyang Tirahan' }, req:true, ex:'서울시 구로구 가마산로 245' },
+      { label:{ ko:'현재 주소', zh:'现住址', vi:'Địa chỉ hiện tại', ja:'現住所', fil:'Kasalukuyang Tirahan' }, req:true, ex:'서울시 구로구 가마산로 245' },
       { label:{ ko:'동 / 층 / 호', zh:'栋 / 层 / 室', vi:'Tòa / Tầng / Phòng', ja:'棟 / 階 / 号室', fil:'Gusali / Palapag / Yunit' }, req:false, ex:'3층 303호' },
-      { label:{ ko:'전입 사유', zh:'迁入原因', vi:'Lý do chuyển đến', ja:'転入理由', fil:'Dahilan ng Paglipat' }, req:true,
-        options:[
-          { ko:'직업 (취업·사업·전근 등)', zh:'职业（就业·创业·调动等）', vi:'Nghề nghiệp (việc làm, kinh doanh...)', ja:'職業（就職·事業·転勤等）', fil:'Trabaho' },
-          { ko:'가족 (결혼·분가 등)', zh:'家庭（结婚·分家等）', vi:'Gia đình (kết hôn, tách hộ...)', ja:'家族（結婚·分家等）', fil:'Pamilya' },
-          { ko:'주택 (구입·계약만료 등)', zh:'住宅（购房·到期等）', vi:'Nhà ở (mua nhà, hết hạn...)', ja:'住宅（購入·契約満了等）', fil:'Pabahay' },
-          { ko:'그 밖의 사유', zh:'其他原因', vi:'Lý do khác', ja:'その他', fil:'Iba pa' },
-        ]
-      },
+      { label:{ ko:'전입 사유', zh:'迁入原因', vi:'Lý do chuyển đến', ja:'転入理由', fil:'Dahilan ng Paglipat' }, req:true, options:[
+        { ko:'직업 (취업·사업·전근 등)', zh:'职业（就业·创业·调动等）', vi:'Nghề nghiệp', ja:'職業（就職·事業·転勤等）', fil:'Trabaho' },
+        { ko:'가족 (결혼·분가 등)', zh:'家庭（结婚·分家等）', vi:'Gia đình', ja:'家族（結婚·分家等）', fil:'Pamilya' },
+        { ko:'주택 (구입·계약만료 등)', zh:'住宅（购房·到期等）', vi:'Nhà ở', ja:'住宅（購入·契約満了等）', fil:'Pabahay' },
+        { ko:'그 밖의 사유', zh:'其他原因', vi:'Lý do khác', ja:'その他', fil:'Iba pa' },
+      ]},
     ]
   },
   {
-    id: 'id_reissue', cat: '주민등록',
-    icon: '🪪',
-    img: 'https://www.guro.go.kr/DATA/bbs/1140/2023/08/08/94e69661-c518-40da-b7fb-d3caade41d07C064FCG2DG3G1C3D.png',
-    title: { ko:'주민등록증 재발급 신청서', zh:'居民登录证补发申请书', vi:'Đơn xin cấp lại Thẻ Cư trú', ja:'住民登録証再発行申請書', fil:'Kahilingan para sa Muling Pag-isyu ng ID' },
-    desc:  { ko:'주민등록증을 분실·훼손한 경우 신청합니다. 본인 사진(3.5cm×4.5cm) 1장이 필요합니다.', zh:'居民登录证丢失或损毁时申请。需要本人照片(3.5cm×4.5cm)1张。', vi:'Nộp đơn khi mất hoặc hỏng thẻ. Cần 1 ảnh chân dung (3.5cm×4.5cm).', ja:'住民登録証を紛失または破損した場合に申請します。本人写真(3.5cm×4.5cm)1枚が必要です。', fil:'Mag-apply kapag nawala o nasira ang ID. Kailangan ng 1 larawang 3.5cm×4.5cm.' },
-    where: { ko:'주민센터 (읍·면·동)', zh:'居民服务中心', vi:'Trung tâm dịch vụ cư dân', ja:'住民センター', fil:'Sentro ng mga Residente' },
-    fields: [
+    id:'move_in_partial', cat:'주민등록', icon:'🏘️',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2023/08/08/96307b6b-5c6d-44ea-8a21-3ffa526e59fdB2A38413760AGB89.png',
+    title:{ ko:'전입신고서 (세대 일부 편입)', zh:'迁入申报书（部分成员迁移）', vi:'Đơn đăng ký chuyển đến (Một phần hộ)', ja:'転入届（世帯一部編入）', fil:'Abiso ng Paglipat (Bahagi ng Sambahayan)' },
+    desc:{ ko:'세대 일부만 이사하는 경우 작성합니다. 이사한 날로부터 14일 이내에 신청하세요.', zh:'仅部分家庭成员搬迁时填写。必须在搬迁之日起14天内申请。', vi:'Điền khi chỉ một phần hộ gia đình chuyển đi. Đăng ký trong vòng 14 ngày.', ja:'世帯の一部だけ引越しする場合に作成します。引越しの日から14日以内に申請してください。', fil:'Punan kapag bahagi lamang ng sambahayan ang lumilipat. Mag-apply sa loob ng 14 na araw.' },
+    where:{ ko:'주민센터 (읍·면·동)', zh:'居民服务中心', vi:'Trung tâm dịch vụ cư dân', ja:'住民センター', fil:'Sentro ng mga Residente' },
+    fields:[
+      { label:{ ko:'신고일', zh:'申报日期', vi:'Ngày đăng ký', ja:'届出日', fil:'Petsa ng Pag-ulat' }, req:true, ex:'2026. 3. 26' },
+      { label:{ ko:'전입자 성명', zh:'迁入者姓名', vi:'Họ tên người chuyển đến', ja:'転入者氏名', fil:'Pangalan ng Lumilipat' }, req:true, ex:'홍길동' },
+      { label:{ ko:'주민등록번호', zh:'居民登录号码', vi:'Số đăng ký cư trú', ja:'住民登録番号', fil:'Resident Registration No.' }, req:true, ex:'870101-1234567' },
+      { label:{ ko:'연락처', zh:'联系电话', vi:'Số điện thoại', ja:'連絡先', fil:'Telepono' }, req:true, ex:'010-1234-5678' },
+      { label:{ ko:'편입할 세대 – 세대주 성명', zh:'加入的家庭 – 户主姓名', vi:'Hộ gia đình gia nhập – Họ tên chủ hộ', ja:'編入する世帯の世帯主氏名', fil:'Ulo ng Sambahayan na Sasamahan' }, req:true },
+      { label:{ ko:'현재 주소', zh:'现住址', vi:'Địa chỉ hiện tại', ja:'現住所', fil:'Kasalukuyang Tirahan' }, req:true, ex:'서울시 구로구 가마산로 245' },
+    ]
+  },
+  {
+    id:'id_reissue', cat:'주민등록', icon:'🪪',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2023/08/08/94e69661-c518-40da-b7fb-d3caade41d07C064FCG2DG3G1C3D.png',
+    title:{ ko:'주민등록증 재발급 신청서', zh:'居民登录证补发申请书', vi:'Đơn xin cấp lại Thẻ Cư trú', ja:'住民登録証再発行申請書', fil:'Kahilingan para sa Muling Pag-isyu ng ID' },
+    desc:{ ko:'주민등록증을 분실·훼손한 경우 신청합니다. 본인 사진(3.5×4.5cm) 1장이 필요합니다.', zh:'居民登录证丢失或损毁时申请。需要本人照片(3.5×4.5cm)1张。', vi:'Nộp đơn khi mất hoặc hỏng thẻ. Cần 1 ảnh chân dung (3.5×4.5cm).', ja:'住民登録証を紛失または破損した場合に申請します。本人写真(3.5×4.5cm)1枚が必要です。', fil:'Mag-apply kapag nawala o nasira ang ID. Kailangan ng 1 larawang 3.5×4.5cm.' },
+    where:{ ko:'주민센터 (읍·면·동)', zh:'居民服务中心', vi:'Trung tâm dịch vụ cư dân', ja:'住民センター', fil:'Sentro ng mga Residente' },
+    fields:[
       { label:{ ko:'성명 (한글)', zh:'姓名（韩文）', vi:'Họ tên (chữ Hàn)', ja:'氏名（ハングル）', fil:'Pangalan (Korean)' }, req:true, ex:'김구로' },
-      { label:{ ko:'주민등록번호', zh:'居民登录号码', vi:'Số đăng ký cư trú', ja:'住民登録番号', fil:'Resident Registration Number' }, req:true, ex:'790101-1234567' },
-      { label:{ ko:'주소 – 시·도', zh:'地址 – 市·道', vi:'Địa chỉ – Tỉnh/Thành phố', ja:'住所 – 市·道', fil:'Tirahan – Lalawigan' }, req:true, ex:'서울특별시' },
+      { label:{ ko:'주민등록번호', zh:'居民登录号码', vi:'Số đăng ký cư trú', ja:'住民登録番号', fil:'Resident Registration No.' }, req:true, ex:'790101-1234567' },
+      { label:{ ko:'주소 – 시·도', zh:'地址 – 市·道', vi:'Địa chỉ – Tỉnh/TP', ja:'住所 – 市·道', fil:'Tirahan – Lalawigan' }, req:true, ex:'서울특별시' },
       { label:{ ko:'주소 – 시·군·구', zh:'地址 – 市·郡·区', vi:'Địa chỉ – Quận/Huyện', ja:'住所 – 市·郡·区', fil:'Tirahan – Lungsod' }, req:true, ex:'구로구' },
-      { label:{ ko:'연락처', zh:'联系电话', vi:'Số điện thoại', ja:'連絡先', fil:'Numero ng Telepono' }, req:true, ex:'010-1234-5678' },
-      { label:{ ko:'재발급 사유', zh:'补发原因', vi:'Lý do cấp lại', ja:'再発行理由', fil:'Dahilan ng Muling Pag-isyu' }, req:true,
-        options:[
-          { ko:'분실', zh:'丢失', vi:'Mất', ja:'紛失', fil:'Nawala' },
-          { ko:'훼손', zh:'损毁', vi:'Hỏng', ja:'破損', fil:'Nasira' },
-          { ko:'성명 변경', zh:'姓名变更', vi:'Đổi tên', ja:'氏名変更', fil:'Pagbabago ng Pangalan' },
-          { ko:'용모(사진) 변경', zh:'外貌（照片）变更', vi:'Thay đổi ngoại hình', ja:'容貌変更', fil:'Pagbabago ng Hitsura' },
-          { ko:'그 밖의 사유', zh:'其他原因', vi:'Lý do khác', ja:'その他', fil:'Iba pa' },
-        ]
-      },
+      { label:{ ko:'연락처', zh:'联系电话', vi:'Số điện thoại', ja:'連絡先', fil:'Telepono' }, req:true, ex:'010-1234-5678' },
+      { label:{ ko:'재발급 사유', zh:'补发原因', vi:'Lý do cấp lại', ja:'再発行理由', fil:'Dahilan ng Muling Pag-isyu' }, req:true, options:[
+        { ko:'분실', zh:'丢失', vi:'Mất', ja:'紛失', fil:'Nawala' },
+        { ko:'훼손', zh:'损毁', vi:'Hỏng', ja:'破損', fil:'Nasira' },
+        { ko:'성명 변경', zh:'姓名变更', vi:'Đổi tên', ja:'氏名変更', fil:'Pagbabago ng Pangalan' },
+        { ko:'용모(사진) 변경', zh:'外貌变更', vi:'Thay đổi ngoại hình', ja:'容貌変更', fil:'Pagbabago ng Hitsura' },
+        { ko:'그 밖의 사유', zh:'其他原因', vi:'Lý do khác', ja:'その他', fil:'Iba pa' },
+      ]},
     ]
   },
   {
-    id: 'birth', cat: '가족관계',
-    icon: '👶',
-    img: 'https://www.guro.go.kr/DATA/bbs/1140/2023/08/08/5b974036-e67b-4f50-86bc-3261d9dea24013E8207G498ADGA8.png',
-    title: { ko:'출생신고서', zh:'出生申报书', vi:'Đơn khai sinh', ja:'出生届', fil:'Sertipiko ng Kapanganakan' },
-    desc:  { ko:'아이가 태어난 날로부터 1개월 이내에 신고해야 합니다. 병원 출생증명서를 지참하세요.', zh:'必须在孩子出生之日起1个月内申报。请携带医院出具的出生证明。', vi:'Phải khai sinh trong vòng 1 tháng. Mang theo giấy chứng sinh của bệnh viện.', ja:'子どもが生まれた日から1か月以内に届け出てください。病院の出生証明書を持参してください。', fil:'Irehistro sa loob ng 1 buwan. Magdala ng birth certificate mula sa ospital.' },
-    where: { ko:'주민센터 (읍·면·동)', zh:'居民服务中心', vi:'Trung tâm dịch vụ cư dân', ja:'住民センター', fil:'Sentro ng mga Residente' },
-    fields: [
+    id:'household_view', cat:'주민등록', icon:'🔍',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2023/08/08/51685193-dffb-467a-ad11-1cb733e2817e1D6GBD0G929E0GF1.png',
+    title:{ ko:'전입세대 열람 신청서', zh:'迁入世代查阅申请书', vi:'Đơn xin xem thông tin hộ chuyển đến', ja:'転入世帯閲覧申請書', fil:'Kahilingan para Tingnan ang Household na Lumipat' },
+    desc:{ ko:'주택을 임차하거나 매수할 때 해당 주소의 세대 정보를 확인할 수 있습니다.', zh:'租赁或购买住宅时，可查看该地址的家庭信息。', vi:'Có thể kiểm tra thông tin hộ gia đình tại địa chỉ khi thuê hoặc mua nhà.', ja:'住宅を賃借または購入する際に、該当住所の世帯情報を確認できます。', fil:'Maaaring tingnan ang impormasyon ng sambahayan sa address kapag nangungupahan o bumibili ng bahay.' },
+    where:{ ko:'주민센터 (읍·면·동)', zh:'居民服务中心', vi:'Trung tâm dịch vụ cư dân', ja:'住民センター', fil:'Sentro ng mga Residente' },
+    fields:[
+      { label:{ ko:'신청인 성명', zh:'申请人姓名', vi:'Họ tên người xin', ja:'申請者氏名', fil:'Pangalan ng Aplikante' }, req:true, ex:'홍길동' },
+      { label:{ ko:'주민등록번호', zh:'居民登录号码', vi:'Số đăng ký cư trú', ja:'住民登録番号', fil:'Resident Registration No.' }, req:true, ex:'870101-1234567' },
+      { label:{ ko:'연락처', zh:'联系电话', vi:'Số điện thoại', ja:'連絡先', fil:'Telepono' }, req:true, ex:'010-1234-5678' },
+      { label:{ ko:'열람 대상 주소', zh:'查阅对象地址', vi:'Địa chỉ cần xem', ja:'閲覧対象住所', fil:'Address na Titingnan' }, req:true, ex:'서울시 구로구 가마산로 245' },
+      { label:{ ko:'열람 목적', zh:'查阅目的', vi:'Mục đích xem', ja:'閲覧目的', fil:'Layunin ng Pagtingin' }, req:true, options:[
+        { ko:'주택 임차', zh:'租赁住宅', vi:'Thuê nhà', ja:'住宅賃借', fil:'Pag-upa ng Bahay' },
+        { ko:'주택 매수', zh:'购买住宅', vi:'Mua nhà', ja:'住宅購入', fil:'Pagbili ng Bahay' },
+      ]},
+    ]
+  },
+  {
+    id:'registry_cert', cat:'주민등록', icon:'📋',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2023/08/08/e69e0db1-4a91-4025-b274-dbe2811f4909C4B78B01A26CDD4B.png',
+    title:{ ko:'등·초본 교부 신청서 (위임)', zh:'登记·抄本交付申请书（委托）', vi:'Đơn xin cấp sao kê hộ khẩu (ủy quyền)', ja:'登·抄本交付申請書（委任）', fil:'Kahilingan para sa Registry Certificate (Proxy)' },
+    desc:{ ko:'본인이 직접 방문할 수 없는 경우 대리인이 신청할 수 있습니다. 위임장과 대리인 신분증이 필요합니다.', zh:'本人无法亲自前往时，可由代理人申请。需要委托书和代理人身份证。', vi:'Khi không thể đến trực tiếp, người được ủy quyền có thể nộp thay. Cần giấy ủy quyền và CMND của người đại diện.', ja:'本人が直接来所できない場合、代理人が申請できます。委任状と代理人の身分証が必要です。', fil:'Kapag hindi makaparoroon nang personal, ang proxy ay maaaring mag-apply. Kailangan ng proxy letter at ID ng proxy.' },
+    where:{ ko:'주민센터 (읍·면·동)', zh:'居民服务中心', vi:'Trung tâm dịch vụ cư dân', ja:'住民センター', fil:'Sentro ng mga Residente' },
+    fields:[
+      { label:{ ko:'위임인 성명 (본인)', zh:'委托人姓名（本人）', vi:'Họ tên người ủy quyền (Bản thân)', ja:'委任者氏名（本人）', fil:'Pangalan ng Nagbibigay ng Proxy (Sarili)' }, req:true, ex:'홍길동' },
+      { label:{ ko:'위임인 주민등록번호', zh:'委托人居民登录号码', vi:'Số đăng ký cư trú của người ủy quyền', ja:'委任者住民登録番号', fil:'RRN ng Nagbibigay ng Proxy' }, req:true, ex:'870101-1234567' },
+      { label:{ ko:'대리인 성명', zh:'代理人姓名', vi:'Họ tên người đại diện', ja:'代理人氏名', fil:'Pangalan ng Proxy' }, req:true, ex:'김대리' },
+      { label:{ ko:'대리인 주민등록번호', zh:'代理人居民登录号码', vi:'Số đăng ký cư trú của người đại diện', ja:'代理人住民登録番号', fil:'RRN ng Proxy' }, req:true, ex:'900101-1234567' },
+      { label:{ ko:'신청 종류', zh:'申请种类', vi:'Loại giấy tờ yêu cầu', ja:'申請種類', fil:'Uri ng Sertipiko' }, req:true, options:[
+        { ko:'주민등록 등본', zh:'住民登录原本', vi:'Sổ hộ khẩu gốc', ja:'住民登録謄本', fil:'Resident Register (Original)' },
+        { ko:'주민등록 초본', zh:'住民登录抄本', vi:'Sổ hộ khẩu sao chép', ja:'住民登録抄本', fil:'Resident Register (Copy)' },
+      ]},
+    ]
+  },
+  // ── 가족관계 ──
+  {
+    id:'birth', cat:'가족관계', icon:'👶',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2023/08/08/5b974036-e67b-4f50-86bc-3261d9dea24013E8207G498ADGA8.png',
+    title:{ ko:'출생신고서', zh:'出生申报书', vi:'Đơn khai sinh', ja:'出生届', fil:'Sertipiko ng Kapanganakan' },
+    desc:{ ko:'아이가 태어난 날로부터 1개월 이내에 신고해야 합니다. 병원 출생증명서를 지참하세요.', zh:'必须在孩子出生之日起1个月内申报。请携带医院出具的出生证明。', vi:'Phải khai sinh trong vòng 1 tháng. Mang theo giấy chứng sinh của bệnh viện.', ja:'子どもが生まれた日から1か月以内に届け出てください。病院の出生証明書を持参してください。', fil:'Irehistro sa loob ng 1 buwan. Magdala ng birth certificate mula sa ospital.' },
+    where:{ ko:'주민센터 (읍·면·동)', zh:'居民服务中心', vi:'Trung tâm dịch vụ cư dân', ja:'住民センター', fil:'Sentro ng mga Residente' },
+    fields:[
       { label:{ ko:'자녀 성명 (한글)', zh:'子女姓名（韩文）', vi:'Họ tên trẻ (chữ Hàn)', ja:'子どもの氏名（ハングル）', fil:'Pangalan ng Bata (Korean)' }, req:true, ex:'홍길동' },
-      { label:{ ko:'자녀 성명 (한자)', zh:'子女姓名（汉字）', vi:'Họ tên trẻ (chữ Hán)', ja:'子どもの氏名（漢字）', fil:'Pangalan ng Bata (Hanja)' }, req:false, note:{ ko:'선택 기재', zh:'可选填写', vi:'Không bắt buộc', ja:'任意記入', fil:'Opsyonal' } },
+      { label:{ ko:'자녀 성명 (한자)', zh:'子女姓名（汉字）', vi:'Họ tên trẻ (chữ Hán)', ja:'子どもの氏名（漢字）', fil:'Pangalan ng Bata (Hanja)' }, req:false, note:{ ko:'선택 기재', zh:'可选填', vi:'Không bắt buộc', ja:'任意記入', fil:'Opsyonal' } },
       { label:{ ko:'출생일시', zh:'出生日期时间', vi:'Ngày giờ sinh', ja:'出生日時', fil:'Petsa at Oras ng Kapanganakan' }, req:true, ex:'2022년 1월 1일 23시 05분' },
-      { label:{ ko:'출생장소', zh:'出生地点', vi:'Nơi sinh', ja:'出生場所', fil:'Lugar ng Kapanganakan' }, req:true,
-        options:[{ ko:'자택', zh:'自家', vi:'Tại nhà', ja:'自宅', fil:'Bahay' },{ ko:'병원', zh:'医院', vi:'Bệnh viện', ja:'病院', fil:'Ospital' },{ ko:'기타', zh:'其他', vi:'Khác', ja:'その他', fil:'Iba pa' }]
-      },
+      { label:{ ko:'출생장소', zh:'出生地点', vi:'Nơi sinh', ja:'出生場所', fil:'Lugar ng Kapanganakan' }, req:true, options:[
+        { ko:'자택', zh:'自家', vi:'Tại nhà', ja:'自宅', fil:'Bahay' },
+        { ko:'병원', zh:'医院', vi:'Bệnh viện', ja:'病院', fil:'Ospital' },
+        { ko:'기타', zh:'其他', vi:'Khác', ja:'その他', fil:'Iba pa' },
+      ]},
       { label:{ ko:'부(父) 성명', zh:'父亲姓名', vi:'Họ tên cha', ja:'父の氏名', fil:'Pangalan ng Ama' }, req:true, ex:'홍형철' },
       { label:{ ko:'부(父) 주민등록번호', zh:'父亲居民登录号码', vi:'Số đăng ký cư trú của cha', ja:'父の住民登録番号', fil:'RRN ng Ama' }, req:true, ex:'880101-1234567' },
       { label:{ ko:'모(母) 성명', zh:'母亲姓名', vi:'Họ tên mẹ', ja:'母の氏名', fil:'Pangalan ng Ina' }, req:true, ex:'건경선' },
@@ -365,13 +357,12 @@ const FORMS = [
     ]
   },
   {
-    id: 'marriage', cat: '가족관계',
-    icon: '💍',
-    img: 'https://www.guro.go.kr/DATA/bbs/1140/2025/05/27/67ca0c1e-f071-492d-b5b8-8f4938fdd6e97B014E6EGF227BE8.png',
-    title: { ko:'혼인신고서', zh:'婚姻申报书', vi:'Đơn đăng ký kết hôn', ja:'婚姻届', fil:'Sertipiko ng Kasal' },
-    desc:  { ko:'혼인신고는 당사자 쌍방과 성인 증인 2명이 서명 또는 도장을 찍어 신고합니다.', zh:'婚姻申报需要双方当事人和2名成年证人签名或盖章后申报。', vi:'Đăng ký kết hôn cần cả hai bên và 2 nhân chứng thành niên ký tên hoặc đóng dấu.', ja:'婚姻届は当事者双方と成人の証人2名が署名または押印して届け出ます。', fil:'Ang pagpaparehistro ng kasal ay nangangailangan ng lagda ng magkabilang partido at 2 saksi.' },
-    where: { ko:'주민센터 또는 시·군·구청', zh:'居民服务中心或市·郡·区厅', vi:'Trung tâm dịch vụ cư dân hoặc Văn phòng Quận', ja:'住民センターまたは市·郡·区庁', fil:'Sentro ng mga Residente o Tanggapan ng Distrito' },
-    fields: [
+    id:'marriage', cat:'가족관계', icon:'💍',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2025/05/27/67ca0c1e-f071-492d-b5b8-8f4938fdd6e97B014E6EGF227BE8.png',
+    title:{ ko:'혼인신고서', zh:'婚姻申报书', vi:'Đơn đăng ký kết hôn', ja:'婚姻届', fil:'Sertipiko ng Kasal' },
+    desc:{ ko:'당사자 쌍방과 성인 증인 2명이 서명 또는 도장을 찍어 신고합니다.', zh:'需要双方当事人和2名成年证人签名或盖章后申报。', vi:'Hai bên và 2 nhân chứng thành niên ký tên hoặc đóng dấu.', ja:'当事者双方と成人の証人2名が署名または押印して届け出ます。', fil:'Ang magkabilang partido at 2 saksi na may sapat na gulang ay kailangang pumirma.' },
+    where:{ ko:'주민센터 또는 시·군·구청', zh:'居民服务中心或市·郡·区厅', vi:'Trung tâm dịch vụ cư dân hoặc Văn phòng Quận', ja:'住民センターまたは市·郡·区庁', fil:'Sentro ng mga Residente o Tanggapan ng Distrito' },
+    fields:[
       { label:{ ko:'신랑 성명', zh:'新郎姓名', vi:'Họ tên chú rể', ja:'新郎氏名', fil:'Pangalan ng Lalaki' }, req:true, ex:'홍길동' },
       { label:{ ko:'신랑 주민등록번호', zh:'新郎居民登录号码', vi:'Số đăng ký của chú rể', ja:'新郎住民登録番号', fil:'RRN ng Lalaki' }, req:true, ex:'880101-1234567' },
       { label:{ ko:'신랑 전화번호', zh:'新郎电话', vi:'Điện thoại chú rể', ja:'新郎電話番号', fil:'Telepono ng Lalaki' }, req:true, ex:'010-1234-5678' },
@@ -380,10 +371,107 @@ const FORMS = [
       { label:{ ko:'신부 주민등록번호', zh:'新娘居民登录号码', vi:'Số đăng ký của cô dâu', ja:'新婦住民登録番号', fil:'RRN ng Babae' }, req:true, ex:'891201-2345678' },
       { label:{ ko:'신부 전화번호', zh:'新娘电话', vi:'Điện thoại cô dâu', ja:'新婦電話番号', fil:'Telepono ng Babae' }, req:true, ex:'010-1234-6789' },
       { label:{ ko:'신부 출생연월일', zh:'新娘出生年月日', vi:'Ngày sinh cô dâu', ja:'新婦生年月日', fil:'Kaarawan ng Babae' }, req:true, ex:'1989.12.01' },
-      { label:{ ko:'혼인 종류', zh:'婚姻类型', vi:'Loại hôn nhân', ja:'婚姻の種類', fil:'Uri ng Kasal' }, req:true,
-        options:[{ ko:'초혼', zh:'初婚', vi:'Lần đầu', ja:'初婚', fil:'Unang Kasal' },{ ko:'재혼', zh:'再婚', vi:'Tái hôn', ja:'再婚', fil:'Muling Kasal' }]
-      },
+      { label:{ ko:'혼인 종류', zh:'婚姻类型', vi:'Loại hôn nhân', ja:'婚姻の種類', fil:'Uri ng Kasal' }, req:true, options:[
+        { ko:'초혼', zh:'初婚', vi:'Lần đầu', ja:'初婚', fil:'Unang Kasal' },
+        { ko:'재혼', zh:'再婚', vi:'Tái hôn', ja:'再婚', fil:'Muling Kasal' },
+      ]},
       { label:{ ko:'혼인 성립일', zh:'婚姻成立日', vi:'Ngày thành lập hôn nhân', ja:'婚姻成立日', fil:'Petsa ng Kasal' }, req:true, ex:'2017년 12월 28일' },
+    ]
+  },
+  {
+    id:'divorce', cat:'가족관계', icon:'📝',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2025/05/27/97308b77-c5de-4e2e-8be9-4cf05513475c96F4BE932ADBF9AE.png',
+    title:{ ko:'이혼신고서', zh:'离婚申报书', vi:'Đơn đăng ký ly hôn', ja:'離婚届', fil:'Sertipiko ng Diborsiyo' },
+    desc:{ ko:'협의이혼 확인서 또는 재판 확정판결문이 필요합니다. 이혼 확정일로부터 1개월 이내에 신고하세요.', zh:'需要协议离婚确认书或判决书。在离婚确定之日起1个月内申报。', vi:'Cần giấy xác nhận ly hôn thuận tình hoặc bản án. Đăng ký trong vòng 1 tháng kể từ ngày ly hôn.', ja:'協議離婚確認書または判決書が必要です。離婚確定日から1か月以内に届け出てください。', fil:'Kailangan ng confirmation ng diborsiyong napagkasunduan o court decision. Irehistro sa loob ng 1 buwan.' },
+    where:{ ko:'주민센터 또는 시·군·구청', zh:'居民服务中心或市·郡·区厅', vi:'Trung tâm dịch vụ cư dân hoặc Văn phòng Quận', ja:'住民センターまたは市·郡·区庁', fil:'Sentro ng mga Residente o Tanggapan ng Distrito' },
+    fields:[
+      { label:{ ko:'남편 성명', zh:'丈夫姓名', vi:'Họ tên chồng', ja:'夫の氏名', fil:'Pangalan ng Asawang Lalaki' }, req:true, ex:'홍길동' },
+      { label:{ ko:'남편 주민등록번호', zh:'丈夫居民登录号码', vi:'Số đăng ký của chồng', ja:'夫の住民登録番号', fil:'RRN ng Asawang Lalaki' }, req:true, ex:'850101-1234567' },
+      { label:{ ko:'아내 성명', zh:'妻子姓名', vi:'Họ tên vợ', ja:'妻の氏名', fil:'Pangalan ng Asawang Babae' }, req:true, ex:'김민정' },
+      { label:{ ko:'아내 주민등록번호', zh:'妻子居民登录号码', vi:'Số đăng ký của vợ', ja:'妻の住民登録番号', fil:'RRN ng Asawang Babae' }, req:true, ex:'870101-2345678' },
+      { label:{ ko:'이혼 종류', zh:'离婚类型', vi:'Loại ly hôn', ja:'離婚の種類', fil:'Uri ng Diborsiyo' }, req:true, options:[
+        { ko:'협의이혼', zh:'协议离婚', vi:'Ly hôn thuận tình', ja:'協議離婚', fil:'Mutual na Diborsiyo' },
+        { ko:'재판이혼', zh:'判决离婚', vi:'Ly hôn theo bản án', ja:'裁判離婚', fil:'Judicial na Diborsiyo' },
+      ]},
+      { label:{ ko:'이혼 확정일', zh:'离婚确定日期', vi:'Ngày xác nhận ly hôn', ja:'離婚確定日', fil:'Petsa ng Pagkumpirma ng Diborsiyo' }, req:true, ex:'2026. 3. 1' },
+    ]
+  },
+  {
+    id:'death', cat:'가족관계', icon:'🕊️',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2023/08/08/0c69a0bf-4eb1-47d9-9685-b0504c646066DG4C860DEEG06G29.png',
+    title:{ ko:'사망신고서', zh:'死亡申报书', vi:'Đơn khai tử', ja:'死亡届', fil:'Sertipiko ng Kamatayan' },
+    desc:{ ko:'사망한 사실을 안 날로부터 1개월 이내에 신고해야 합니다. 의사 사망진단서가 필요합니다.', zh:'必须在得知死亡之日起1个月内申报。需要医生出具的死亡诊断书。', vi:'Phải khai tử trong vòng 1 tháng kể từ ngày biết tin. Cần giấy chứng tử của bác sĩ.', ja:'死亡を知った日から1か月以内に届け出てください。医師の死亡診断書が必要です。', fil:'Irehistro sa loob ng 1 buwan mula nang malaman ang tungkol sa kamatayan. Kailangan ng death certificate ng doktor.' },
+    where:{ ko:'주민센터 (읍·면·동)', zh:'居民服务中心', vi:'Trung tâm dịch vụ cư dân', ja:'住民センター', fil:'Sentro ng mga Residente' },
+    fields:[
+      { label:{ ko:'사망자 성명', zh:'死亡者姓名', vi:'Họ tên người qua đời', ja:'死亡者氏名', fil:'Pangalan ng Namatay' }, req:true, ex:'홍길동' },
+      { label:{ ko:'사망자 주민등록번호', zh:'死亡者居民登录号码', vi:'Số đăng ký cư trú của người qua đời', ja:'死亡者住民登録番号', fil:'RRN ng Namatay' }, req:true, ex:'500101-1234567' },
+      { label:{ ko:'사망 일시', zh:'死亡日期时间', vi:'Ngày giờ mất', ja:'死亡日時', fil:'Petsa at Oras ng Kamatayan' }, req:true, ex:'2026년 3월 1일 14시' },
+      { label:{ ko:'사망 장소', zh:'死亡地点', vi:'Nơi mất', ja:'死亡場所', fil:'Lugar ng Kamatayan' }, req:true, options:[
+        { ko:'병원', zh:'医院', vi:'Bệnh viện', ja:'病院', fil:'Ospital' },
+        { ko:'자택', zh:'自家', vi:'Tại nhà', ja:'自宅', fil:'Bahay' },
+        { ko:'기타', zh:'其他', vi:'Khác', ja:'その他', fil:'Iba pa' },
+      ]},
+      { label:{ ko:'신고인 성명', zh:'申报人姓名', vi:'Họ tên người khai', ja:'届出人氏名', fil:'Pangalan ng Tagapag-ulat' }, req:true },
+      { label:{ ko:'신고인 연락처', zh:'申报人电话', vi:'Điện thoại người khai', ja:'届出人連絡先', fil:'Telepono ng Tagapag-ulat' }, req:true, ex:'010-1234-5678' },
+    ]
+  },
+  // ── 여권 ──
+  {
+    id:'passport', cat:'여권', icon:'🛂',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2025/05/27/3a285630-daea-40f3-ab2b-5dd8a2478fbbAF2DD7C4D03A0A34.png',
+    title:{ ko:'여권발급신청서', zh:'护照申请书', vi:'Đơn xin cấp hộ chiếu', ja:'旅券発給申請書', fil:'Kahilingan para sa Pasaporte' },
+    desc:{ ko:'여권을 처음 발급받거나 갱신할 때 신청합니다. 증명사진 1장, 신분증이 필요합니다.', zh:'首次申请护照或续签时申请。需要证件照1张、身份证。', vi:'Nộp khi lần đầu xin hoặc gia hạn hộ chiếu. Cần 1 ảnh thẻ và CMND.', ja:'初めて旅券を取得または更新する際に申請します。証明写真1枚、身分証が必要です。', fil:'Mag-apply kapag kumuha o nag-renew ng pasaporte. Kailangan ng 1 ID photo at ID.' },
+    where:{ ko:'구청 민원실 또는 여권사무 대행기관', zh:'区厅民愿室或护照业务代理机关', vi:'Phòng dịch vụ dân sự của Quận hoặc cơ quan ủy quyền hộ chiếu', ja:'区庁民願室またはパスポート業務代行機関', fil:'Tanggapan ng Distrito o ahensyang nagpaproseso ng pasaporte' },
+    fields:[
+      { label:{ ko:'성명 (한글)', zh:'姓名（韩文）', vi:'Họ tên (chữ Hàn)', ja:'氏名（ハングル）', fil:'Pangalan (Korean)' }, req:true, ex:'홍길동' },
+      { label:{ ko:'성명 (영문)', zh:'姓名（英文）', vi:'Họ tên (tiếng Anh)', ja:'氏名（英語）', fil:'Pangalan (English)' }, req:true, ex:'HONG GILDONG' },
+      { label:{ ko:'주민등록번호', zh:'居民登录号码', vi:'Số đăng ký cư trú', ja:'住民登録番号', fil:'Resident Registration No.' }, req:true, ex:'870101-1234567' },
+      { label:{ ko:'주소', zh:'地址', vi:'Địa chỉ', ja:'住所', fil:'Tirahan' }, req:true, ex:'서울시 구로구 가마산로 245' },
+      { label:{ ko:'연락처', zh:'联系电话', vi:'Số điện thoại', ja:'連絡先', fil:'Telepono' }, req:true, ex:'010-1234-5678' },
+      { label:{ ko:'여권 종류', zh:'护照类型', vi:'Loại hộ chiếu', ja:'旅券の種類', fil:'Uri ng Pasaporte' }, req:true, options:[
+        { ko:'복수여권 (10년)', zh:'多次护照（10年）', vi:'Hộ chiếu nhiều lần (10 năm)', ja:'複数旅券（10年）', fil:'Multiple Entry (10 taon)' },
+        { ko:'복수여권 (5년)', zh:'多次护照（5年）', vi:'Hộ chiếu nhiều lần (5 năm)', ja:'複数旅券（5年）', fil:'Multiple Entry (5 taon)' },
+        { ko:'단수여권 (1년)', zh:'单次护照（1年）', vi:'Hộ chiếu một lần (1 năm)', ja:'単数旅券（1年）', fil:'Single Entry (1 taon)' },
+      ]},
+    ]
+  },
+  {
+    id:'passport_guardian', cat:'여권', icon:'👨‍👧',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2025/05/27/7df82b23-e525-4aa4-82b3-2c9a6b6195734077EDDA6B2F36FE.png',
+    title:{ ko:'여권신청 법정대리인 동의서', zh:'护照申请法定代理人同意书', vi:'Đơn đồng ý của người đại diện hợp pháp xin hộ chiếu', ja:'旅券申請法定代理人同意書', fil:'Pahintulot ng Legal na Guardian para sa Pasaporte' },
+    desc:{ ko:'18세 미만 미성년자가 여권을 신청할 때 법정대리인(부모 등)의 동의서가 필요합니다.', zh:'未满18岁的未成年人申请护照时，需要法定代理人（父母等）的同意书。', vi:'Người dưới 18 tuổi khi xin hộ chiếu cần có giấy đồng ý của người đại diện hợp pháp (cha/mẹ,...).', ja:'18歳未満の未成年者が旅券を申請する際、法定代理人（親等）の同意書が必要です。', fil:'Ang mga menor de edad na wala pang 18 taong gulang ay nangangailangan ng pahintulot ng legal na guardian (magulang, atbp.) kapag nag-aaplay ng pasaporte.' },
+    where:{ ko:'구청 민원실 또는 여권사무 대행기관', zh:'区厅民愿室或护照业务代理机关', vi:'Phòng dịch vụ dân sự của Quận hoặc cơ quan ủy quyền hộ chiếu', ja:'区庁民願室またはパスポート業務代行機関', fil:'Tanggapan ng Distrito o ahensyang nagpaproseso ng pasaporte' },
+    fields:[
+      { label:{ ko:'신청인(미성년자) 성명', zh:'申请人（未成年）姓名', vi:'Họ tên người xin (chưa thành niên)', ja:'申請者（未成年）氏名', fil:'Pangalan ng Aplikante (Minor)' }, req:true, ex:'홍길동' },
+      { label:{ ko:'신청인 주민등록번호', zh:'申请人居民登录号码', vi:'Số đăng ký cư trú của người xin', ja:'申請者住民登録番号', fil:'RRN ng Aplikante' }, req:true, ex:'100101-1234567' },
+      { label:{ ko:'법정대리인 성명', zh:'法定代理人姓名', vi:'Họ tên người đại diện hợp pháp', ja:'法定代理人氏名', fil:'Pangalan ng Legal na Guardian' }, req:true, ex:'홍형철' },
+      { label:{ ko:'법정대리인 주민등록번호', zh:'法定代理人居民登录号码', vi:'Số đăng ký cư trú của người đại diện', ja:'法定代理人住民登録番号', fil:'RRN ng Legal na Guardian' }, req:true, ex:'800101-1234567' },
+      { label:{ ko:'법정대리인 연락처', zh:'法定代理人联系电话', vi:'Điện thoại người đại diện', ja:'法定代理人連絡先', fil:'Telepono ng Legal na Guardian' }, req:true, ex:'010-1234-5678' },
+      { label:{ ko:'신청인과의 관계', zh:'与申请人的关系', vi:'Quan hệ với người xin', ja:'申請者との関係', fil:'Relasyon sa Aplikante' }, req:true, options:[
+        { ko:'부(父)', zh:'父亲', vi:'Cha', ja:'父', fil:'Ama' },
+        { ko:'모(母)', zh:'母亲', vi:'Mẹ', ja:'母', fil:'Ina' },
+        { ko:'기타 법정대리인', zh:'其他法定代理人', vi:'Người đại diện hợp pháp khác', ja:'その他法定代理人', fil:'Iba pang Legal na Guardian' },
+      ]},
+    ]
+  },
+  // ── 기타 ──
+  {
+    id:'waste', cat:'기타', icon:'🗑️',
+    img:'https://www.guro.go.kr/DATA/bbs/1140/2023/08/08/0e20ce60-cfc6-4d08-aac5-51851fdddb3104E43FDG6C1C3G1C.png',
+    title:{ ko:'대형폐기물 신고서', zh:'大型废弃物申报书', vi:'Đơn khai báo rác thải cồng kềnh', ja:'大型廃棄物申告書', fil:'Abiso para sa Malaking Basura' },
+    desc:{ ko:'소파, 냉장고 등 대형 폐기물을 버릴 때 신고해야 합니다. 수수료를 납부한 후 지정 날짜에 배출하세요.', zh:'丢弃沙发、冰箱等大型废弃物时需要申报。缴纳费用后在指定日期排放。', vi:'Cần khai báo khi vứt rác cồng kềnh như sofa, tủ lạnh. Đóng phí và thải ra vào ngày quy định.', ja:'ソファや冷蔵庫などの大型廃棄物を捨てる際に申告が必要です。料金を支払い、指定日に排出してください。', fil:'Kailangan ng abiso kapag itatapon ang malalaking basura tulad ng sofa, ref. Magbayad ng bayad at ilabas sa takdang araw.' },
+    where:{ ko:'주민센터 (읍·면·동) 또는 온라인', zh:'居民服务中心或线上申请', vi:'Trung tâm dịch vụ cư dân hoặc trực tuyến', ja:'住民センターまたはオンライン', fil:'Sentro ng mga Residente o Online' },
+    fields:[
+      { label:{ ko:'신고인 성명', zh:'申报人姓名', vi:'Họ tên người khai', ja:'申告者氏名', fil:'Pangalan ng Nagpapaabiso' }, req:true, ex:'홍길동' },
+      { label:{ ko:'연락처', zh:'联系电话', vi:'Số điện thoại', ja:'連絡先', fil:'Telepono' }, req:true, ex:'010-1234-5678' },
+      { label:{ ko:'배출 주소', zh:'排放地址', vi:'Địa chỉ thải rác', ja:'排出住所', fil:'Address ng Pagtatapon' }, req:true, ex:'서울시 구로구 가마산로 245' },
+      { label:{ ko:'폐기물 종류', zh:'废弃物种类', vi:'Loại rác thải', ja:'廃棄物の種類', fil:'Uri ng Basura' }, req:true, options:[
+        { ko:'가구류 (소파·침대·장롱 등)', zh:'家具类（沙发·床·衣柜等）', vi:'Đồ nội thất (sofa, giường...)', ja:'家具類（ソファ·ベッド·タンス等）', fil:'Muwebles (sofa, kama...)' },
+        { ko:'가전류 (냉장고·세탁기·TV 등)', zh:'家电类（冰箱·洗衣机·电视等）', vi:'Đồ điện tử (tủ lạnh, máy giặt...)', ja:'家電類（冷蔵庫·洗濯機·TV等）', fil:'Electronics (ref, washing machine...)' },
+        { ko:'기타', zh:'其他', vi:'Khác', ja:'その他', fil:'Iba pa' },
+      ]},
+      { label:{ ko:'수량', zh:'数量', vi:'Số lượng', ja:'数量', fil:'Dami' }, req:true, ex:'1개' },
+      { label:{ ko:'희망 수거일', zh:'希望收取日期', vi:'Ngày muốn thu gom', ja:'希望収集日', fil:'Gustong Araw ng Koleksyon' }, req:true, ex:'2026. 4. 1' },
     ]
   },
 ];
@@ -393,7 +481,24 @@ let lang = 'ko';
 let curCat = 'all';
 let curForm = null;
 
-/* ── Render helpers ── */
+/* ── Stats (localStorage) ── */
+function getStats() {
+  return JSON.parse(localStorage.getItem('gusring_stats') || '{"visits":0,"views":0}');
+}
+function incVisit() {
+  const s = getStats(); s.visits++; localStorage.setItem('gusring_stats', JSON.stringify(s));
+}
+function incView() {
+  const s = getStats(); s.views++; localStorage.setItem('gusring_stats', JSON.stringify(s));
+}
+function renderStats() {
+  const s = getStats();
+  $('stat-visits').textContent = s.visits.toLocaleString();
+  $('stat-views').textContent  = s.views.toLocaleString();
+}
+
+/* ── UI helpers ── */
+function $(id){ return document.getElementById(id); }
 function applyUI(l) {
   const u = UI[l];
   $('h-title').textContent  = u.hTitle;
@@ -409,17 +514,25 @@ function applyUI(l) {
   $('cat-all').textContent  = u.catAll;
   $('cat-r').textContent    = u.catR;
   $('cat-f').textContent    = u.catF;
+  $('cat-p').textContent    = u.catP;
+  $('cat-e').textContent    = u.catE;
   $('guide-title-lbl').textContent = u.guideTitle;
   $('img-cap').textContent  = u.imgCap;
+  $('fab-lbl').textContent  = u.fab;
+  $('modal-title').textContent  = u.modalTitle;
+  $('modal-sub').textContent    = u.modalSub;
+  $('modal-cancel').textContent = u.modalCancel;
+  $('modal-send').textContent   = u.modalSend;
+  $('stat-v-lbl').textContent   = u.statV;
+  $('stat-f-lbl').textContent   = u.statF;
 }
-
-function $(id){ return document.getElementById(id); }
 
 /* ── Step 1 ── */
 function pickLang(l) {
   lang = l;
   applyUI(l);
   renderForms(curCat);
+  renderStats();
   go(2);
 }
 
@@ -430,7 +543,6 @@ function filterCat(cat, el) {
   el.classList.add('active');
   renderForms(cat);
 }
-
 function renderForms(cat) {
   const list = $('form-list');
   list.innerHTML = '';
@@ -453,59 +565,49 @@ function renderForms(cat) {
 /* ── Step 3 ── */
 function showDetail(form) {
   curForm = form;
-  const u = UI[lang];
-
   $('d-ko').textContent      = form.title.ko;
   $('d-native').textContent  = form.title[lang];
   $('d-where').textContent   = form.where[lang];
   $('d-desc').textContent    = form.desc[lang];
-
-  // Image
   $('form-img').src = form.img;
-  $('form-img').alt = form.title.ko;
   $('lb-img').src   = form.img;
 
-  // Fields
   const fl = $('field-list');
   fl.innerHTML = '';
   form.fields.forEach((f, i) => {
     const row = document.createElement('div');
     row.className = 'field-row';
-
-    let extraHtml = '';
-    if (f.note) {
-      extraHtml += `<span class="field-note">💡 ${f.note[lang]}</span>`;
-    }
-    if (f.ex) {
-      extraHtml += `<div class="field-ex">예시 <code>${f.ex}</code></div>`;
-    }
+    let extra = '';
+    if (f.note) extra += `<span class="field-note">💡 ${f.note[lang]}</span>`;
+    if (f.ex)   extra += `<div class="field-ex">예시 <code>${f.ex}</code></div>`;
     if (f.options) {
-      const chips = f.options.map(o => `<span class="opt-chip">${o[lang]}<br><span class="opt-sub">${lang!=='ko'?o.ko:''}</span></span>`).join('');
-      extraHtml += `<div class="options-wrap">${chips}</div>`;
+      const chips = f.options.map(o =>
+        `<span class="opt-chip">${o[lang]}${lang!=='ko'?`<br><span class="opt-sub">${o.ko}</span>`:''}</span>`
+      ).join('');
+      extra += `<div class="options-wrap">${chips}</div>`;
     }
-
     row.innerHTML = `
       <div class="field-num">${i+1}</div>
       <div class="field-body">
         <div class="field-native">${f.label[lang]}${f.req?'<span class="req-dot"></span>':''}</div>
         ${lang!=='ko'?`<div class="field-ko">${f.label.ko}</div>`:''}
-        ${extraHtml}
+        ${extra}
       </div>`;
     fl.appendChild(row);
   });
 
+  incView();
+  renderStats();
   go(3);
 }
 
 /* ── TTS ── */
 function speak() {
   if (!curForm) return;
-  const text = curForm.desc[lang];
-  const map  = { ko:'ko-KR', zh:'zh-CN', vi:'vi-VN', ja:'ja-JP', fil:'fil-PH' };
+  const map = { ko:'ko-KR', zh:'zh-CN', vi:'vi-VN', ja:'ja-JP', fil:'fil-PH' };
   window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = map[lang] || 'ko-KR';
-  u.rate = 0.88;
+  const u = new SpeechSynthesisUtterance(curForm.desc[lang]);
+  u.lang = map[lang] || 'ko-KR'; u.rate = 0.88;
   speechSynthesis.speak(u);
 }
 
@@ -513,19 +615,41 @@ function speak() {
 function openLightbox()  { $('lightbox').classList.add('open'); }
 function closeLightbox() { $('lightbox').classList.remove('open'); }
 
-/* ── Navigation ── */
-function go(screen) {
-  $('sc-lang').classList.toggle('hidden',   screen !== 1);
-  $('sc-forms').classList.toggle('hidden',  screen !== 2);
-  $('sc-detail').classList.toggle('hidden', screen !== 3);
-
-  ['s1','s2','s3'].forEach((id, i) => {
-    const el = $(id);
-    el.className = 'step' + (i+1 < screen ? ' done' : i+1 === screen ? ' active' : '');
-  });
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+/* ── Feedback ── */
+function openFeedback() {
+  $('modal-thanks').classList.add('hidden');
+  $('modal-form-area').classList.remove('hidden');
+  $('feedback-text').value = '';
+  $('modal-bg').classList.add('open');
 }
+function closeFeedback(e) {
+  if (!e || e.target === $('modal-bg')) $('modal-bg').classList.remove('open');
+}
+function submitFeedback() {
+  const txt = $('feedback-text').value.trim();
+  if (!txt) return;
+  // 로컬 저장
+  const logs = JSON.parse(localStorage.getItem('gusring_feedback') || '[]');
+  logs.push({ lang, form: curForm?.id || 'none', text: txt, time: new Date().toISOString() });
+  localStorage.setItem('gusring_feedback', JSON.stringify(logs));
+  $('modal-form-area').classList.add('hidden');
+  $('modal-thanks').classList.remove('hidden');
+  setTimeout(() => $('modal-bg').classList.remove('open'), 2000);
+}
+
+/* ── Nav ── */
+function go(screen) {
+  $('sc-lang').classList.toggle('hidden',   screen!==1);
+  $('sc-forms').classList.toggle('hidden',  screen!==2);
+  $('sc-detail').classList.toggle('hidden', screen!==3);
+  ['s1','s2','s3'].forEach((id,i) => {
+    $(id).className = 'step'+(i+1<screen?' done':i+1===screen?' active':'');
+  });
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+/* ── Init ── */
+incVisit();
 </script>
 </body>
 </html>
