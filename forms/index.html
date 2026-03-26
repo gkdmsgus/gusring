@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>구스링 – 구로 스마트 링</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -118,6 +119,12 @@
     .stat-item { display:flex; align-items:center; gap:6px; }
     .stat-num  { font-weight:700; color:#1e3a8a; font-size:15px; }
 
+    /* QR Section */
+    .qr-section { padding:16px 20px; border-top:1px solid var(--border); text-align:center; }
+    .qr-sec-title { font-size:12px; font-weight:700; color:#374151; margin-bottom:10px; }
+    .qr-box { display:inline-block; padding:10px; background:white; border:1.5px solid var(--border); border-radius:12px; }
+    .qr-hint { font-size:11px; color:var(--gray); margin-top:8px; }
+
     .hidden { display:none !important; }
     @media(max-width:480px){ .lang-grid{grid-template-columns:repeat(2,1fr);} }
   </style>
@@ -193,6 +200,11 @@
         <div class="guide-title">📋 <span id="guide-title-lbl">항목별 안내</span></div>
         <div id="field-list"></div>
       </div>
+      <div class="qr-section">
+        <div class="qr-sec-title" id="qr-title-lbl">📱 이 서식 바로가기 QR</div>
+        <div class="qr-box"><div id="qr-canvas"></div></div>
+        <div class="qr-hint" id="qr-hint-lbl">QR을 스캔하면 이 서식으로 바로 이동합니다</div>
+      </div>
     </div>
   </div>
 
@@ -227,11 +239,11 @@
 <script>
 /* ── UI Strings ── */
 const UI = {
-  ko:  { hTitle:'구스링', hSub:'Guro Smart Ring · 구로구 다국어 민원서식 가이드', s1:'언어 선택', s2:'서식 선택', s3:'서식 안내', langPrompt:'언어를 선택하세요', formPrompt:'서식을 선택하세요', tts:'설명 듣기', back1:'언어 다시 선택', back2:'서식 목록으로', catAll:'전체', catR:'주민등록', catF:'가족관계', catP:'여권', catE:'기타', guideTitle:'항목별 안내', imgCap:'이미지를 탭하면 크게 볼 수 있어요', fab:'피드백', modalTitle:'불편한 점이 있으신가요?', modalSub:'서식 오류, 번역 이상, 개선 의견 모두 환영해요', modalCancel:'취소', modalSend:'보내기', statV:'방문', statF:'서식 조회' },
-  zh:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多语言民愿表格指南', s1:'选择语言', s2:'选择表格', s3:'表格说明', langPrompt:'请选择语言', formPrompt:'请选择表格', tts:'收听说明', back1:'重新选择语言', back2:'返回列表', catAll:'全部', catR:'居民登录', catF:'家庭关系', catP:'护照', catE:'其他', guideTitle:'各项目说明', imgCap:'点击图片可放大查看', fab:'反馈', modalTitle:'有什么不便之处吗？', modalSub:'表格错误、翻译问题、改进意见均欢迎', modalCancel:'取消', modalSend:'发送', statV:'访问', statF:'表格查看' },
-  vi:  { hTitle:'구스링', hSub:'Guro Smart Ring · Hướng dẫn mẫu đơn đa ngôn ngữ Guro-gu', s1:'Chọn ngôn ngữ', s2:'Chọn mẫu đơn', s3:'Hướng dẫn', langPrompt:'Vui lòng chọn ngôn ngữ', formPrompt:'Vui lòng chọn mẫu đơn', tts:'Nghe hướng dẫn', back1:'Chọn lại ngôn ngữ', back2:'Trở về danh sách', catAll:'Tất cả', catR:'Đăng ký cư trú', catF:'Quan hệ gia đình', catP:'Hộ chiếu', catE:'Khác', guideTitle:'Hướng dẫn từng mục', imgCap:'Nhấn vào ảnh để phóng to', fab:'Phản hồi', modalTitle:'Bạn có gặp khó khăn gì không?', modalSub:'Lỗi mẫu đơn, dịch sai, ý kiến cải thiện đều được chào đón', modalCancel:'Hủy', modalSend:'Gửi', statV:'lượt truy cập', statF:'lượt xem' },
-  ja:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多言語民願書式案内', s1:'言語選択', s2:'書式選択', s3:'書式案内', langPrompt:'言語を選択してください', formPrompt:'書式を選択してください', tts:'説明を聞く', back1:'言語を再選択', back2:'書式一覧へ', catAll:'全て', catR:'住民登録', catF:'家族関係', catP:'パスポート', catE:'その他', guideTitle:'各項目の案内', imgCap:'画像をタップすると拡大できます', fab:'フィードバック', modalTitle:'不便な点はありますか？', modalSub:'書式エラー、翻訳の誤り、改善意見を歓迎します', modalCancel:'キャンセル', modalSend:'送信', statV:'訪問', statF:'書式閲覧' },
-  fil: { hTitle:'구스링', hSub:'Guro Smart Ring · Gabay sa Multilingual na Form ng Guro-gu', s1:'Pumili ng Wika', s2:'Pumili ng Form', s3:'Gabay', langPrompt:'Pumili ng wika', formPrompt:'Pumili ng form', tts:'Pakinggan', back1:'Pumili Muli ng Wika', back2:'Bumalik sa Listahan', catAll:'Lahat', catR:'Pagpaparehistro', catF:'Relasyong Pampamilya', catP:'Pasaporte', catE:'Iba pa', guideTitle:'Gabay sa Bawat Aytem', imgCap:'I-tap ang larawan para palakihin', fab:'Feedback', modalTitle:'May hirap ka ba?', modalSub:'Mga error sa form, maling salin, o mungkahi — lahat ay tinatanggap', modalCancel:'Kanselahin', modalSend:'Ipadala', statV:'bisita', statF:'form na tiningnan' },
+  ko:  { hTitle:'구스링', hSub:'Guro Smart Ring · 구로구 다국어 민원서식 가이드', s1:'언어 선택', s2:'서식 선택', s3:'서식 안내', langPrompt:'언어를 선택하세요', formPrompt:'서식을 선택하세요', tts:'설명 듣기', back1:'언어 다시 선택', back2:'서식 목록으로', catAll:'전체', catR:'주민등록', catF:'가족관계', catP:'여권', catE:'기타', guideTitle:'항목별 안내', imgCap:'이미지를 탭하면 크게 볼 수 있어요', fab:'피드백', modalTitle:'불편한 점이 있으신가요?', modalSub:'서식 오류, 번역 이상, 개선 의견 모두 환영해요', modalCancel:'취소', modalSend:'보내기', statV:'방문', statF:'서식 조회', qrTitle:'📱 이 서식 바로가기 QR', qrHint:'QR을 스캔하면 이 서식으로 바로 이동합니다' },
+  zh:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多语言民愿表格指南', s1:'选择语言', s2:'选择表格', s3:'表格说明', langPrompt:'请选择语言', formPrompt:'请选择表格', tts:'收听说明', back1:'重新选择语言', back2:'返回列表', catAll:'全部', catR:'居民登录', catF:'家庭关系', catP:'护照', catE:'其他', guideTitle:'各项目说明', imgCap:'点击图片可放大查看', fab:'反馈', modalTitle:'有什么不便之处吗？', modalSub:'表格错误、翻译问题、改进意见均欢迎', modalCancel:'取消', modalSend:'发送', statV:'访问', statF:'表格查看', qrTitle:'📱 扫描直达此表格', qrHint:'扫描二维码可直接跳转到此表格' },
+  vi:  { hTitle:'구스링', hSub:'Guro Smart Ring · Hướng dẫn mẫu đơn đa ngôn ngữ Guro-gu', s1:'Chọn ngôn ngữ', s2:'Chọn mẫu đơn', s3:'Hướng dẫn', langPrompt:'Vui lòng chọn ngôn ngữ', formPrompt:'Vui lòng chọn mẫu đơn', tts:'Nghe hướng dẫn', back1:'Chọn lại ngôn ngữ', back2:'Trở về danh sách', catAll:'Tất cả', catR:'Đăng ký cư trú', catF:'Quan hệ gia đình', catP:'Hộ chiếu', catE:'Khác', guideTitle:'Hướng dẫn từng mục', imgCap:'Nhấn vào ảnh để phóng to', fab:'Phản hồi', modalTitle:'Bạn có gặp khó khăn gì không?', modalSub:'Lỗi mẫu đơn, dịch sai, ý kiến cải thiện đều được chào đón', modalCancel:'Hủy', modalSend:'Gửi', statV:'lượt truy cập', statF:'lượt xem', qrTitle:'📱 QR truy cập nhanh', qrHint:'Quét mã QR để truy cập trực tiếp vào mẫu đơn này' },
+  ja:  { hTitle:'구스링', hSub:'Guro Smart Ring · 九老区多言語民願書式案内', s1:'言語選択', s2:'書式選択', s3:'書式案内', langPrompt:'言語を選択してください', formPrompt:'書式を選択してください', tts:'説明を聞く', back1:'言語を再選択', back2:'書式一覧へ', catAll:'全て', catR:'住民登録', catF:'家族関係', catP:'パスポート', catE:'その他', guideTitle:'各項目の案内', imgCap:'画像をタップすると拡大できます', fab:'フィードバック', modalTitle:'不便な点はありますか？', modalSub:'書式エラー、翻訳の誤り、改善意見を歓迎します', modalCancel:'キャンセル', modalSend:'送信', statV:'訪問', statF:'書式閲覧', qrTitle:'📱 この書式へのQRコード', qrHint:'QRコードをスキャンするとこの書式に直接アクセスできます' },
+  fil: { hTitle:'구스링', hSub:'Guro Smart Ring · Gabay sa Multilingual na Form ng Guro-gu', s1:'Pumili ng Wika', s2:'Pumili ng Form', s3:'Gabay', langPrompt:'Pumili ng wika', formPrompt:'Pumili ng form', tts:'Pakinggan', back1:'Pumili Muli ng Wika', back2:'Bumalik sa Listahan', catAll:'Lahat', catR:'Pagpaparehistro', catF:'Relasyong Pampamilya', catP:'Pasaporte', catE:'Iba pa', guideTitle:'Gabay sa Bawat Aytem', imgCap:'I-tap ang larawan para palakihin', fab:'Feedback', modalTitle:'May hirap ka ba?', modalSub:'Mga error sa form, maling salin, o mungkahi — lahat ay tinatanggap', modalCancel:'Kanselahin', modalSend:'Ipadala', statV:'bisita', statF:'form na tiningnan', qrTitle:'📱 QR para sa Form na Ito', qrHint:'I-scan ang QR para direktang mapunta sa form na ito' },
 };
 
 /* ── Form Data ── */
@@ -525,6 +537,8 @@ function applyUI(l) {
   $('modal-send').textContent   = u.modalSend;
   $('stat-v-lbl').textContent   = u.statV;
   $('stat-f-lbl').textContent   = u.statF;
+  $('qr-title-lbl').textContent = u.qrTitle;
+  $('qr-hint-lbl').textContent  = u.qrHint;
 }
 
 /* ── Step 1 ── */
@@ -596,6 +610,16 @@ function showDetail(form) {
     fl.appendChild(row);
   });
 
+  // QR Code
+  const qrEl = $('qr-canvas');
+  qrEl.innerHTML = '';
+  new QRCode(qrEl, {
+    text: `https://gusring.vercel.app/?form=${form.id}&lang=${lang}`,
+    width: 140, height: 140,
+    colorDark: '#1a4fa8', colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
   incView();
   renderStats();
   go(3);
@@ -649,6 +673,21 @@ function go(screen) {
 }
 
 /* ── Init ── */
+(function initFromURL() {
+  const p = new URLSearchParams(location.search);
+  const pLang = p.get('lang');
+  const pForm = p.get('form');
+  if (pLang && ['ko','zh','vi','ja','fil'].includes(pLang) && pForm) {
+    const f = FORMS.find(x => x.id === pForm);
+    if (f) {
+      lang = pLang;
+      applyUI(pLang);
+      renderForms('all');
+      showDetail(f);
+      return;
+    }
+  }
+})();
 incVisit();
 </script>
 </body>
